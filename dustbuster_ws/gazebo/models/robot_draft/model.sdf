@@ -114,7 +114,7 @@
         </inertia>
         <pose>0 0 0 0 -0 0</pose>
       </inertial>
-      <pose>0.001456 0.474958 -0.113119 3.14158 1.57079 3.14158</pose>
+      <pose>0.001456 0.474958 -0.113119 -3.14112 1.57079 -3.14112</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
       <kinematic>0</kinematic>
@@ -214,7 +214,7 @@
         </inertia>
         <pose>0 0 0 0 -0 0</pose>
       </inertial>
-      <pose>-0.58 -0.08 0 3.14158 1.57079 3.14158</pose>
+      <pose>-0.58 -0.08 0 -3.14112 1.57079 -3.14112</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
       <kinematic>0</kinematic>
@@ -314,7 +314,7 @@
         </inertia>
         <pose>0 0 0 0 -0 0</pose>
       </inertial>
-      <pose>0.58 -0.08 0 3.14158 1.57079 3.14158</pose>
+      <pose>0.58 -0.08 0 -3.14112 1.57079 -3.14112</pose>
       <self_collide>0</self_collide>
       <enable_wind>0</enable_wind>
       <kinematic>0</kinematic>
@@ -499,5 +499,8 @@
     </joint>
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
+    <plugin name='diff_drive' filename='libmy_node.so'>
+
+      </plugin>
   </model>
 </sdf>
