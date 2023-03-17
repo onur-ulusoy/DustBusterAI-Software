@@ -499,7 +499,7 @@
     </joint>
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
-    <plugin name='diff_drive' filename='libmy_node.so'>
+    <plugin name='wheel_velocity_setter' filename='libwheel_velocity_setter.so'>
 
       </plugin>
   </model>

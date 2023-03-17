@@ -24,27 +24,27 @@ include_directories(
 link_directories(${GAZEBO_LIBRARY_DIRS})
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-# Create a shared library from my_node.cpp
-add_library(my_node SHARED src/my_node.cpp)
+# Create a shared library from wheel_velocity_setter.cpp
+add_library(wheel_velocity_setter SHARED src/wheel_velocity_setter.cpp)
 
-target_include_directories(my_node PUBLIC
+target_include_directories(wheel_velocity_setter PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
-target_link_libraries(my_node
+target_link_libraries(wheel_velocity_setter
   ${GAZEBO_LIBRARIES}
   ${ament_LIBRARIES}
 )
-target_compile_features(my_node PUBLIC cxx_std_17)
+target_compile_features(wheel_velocity_setter PUBLIC cxx_std_17)
 ament_target_dependencies(
-  my_node
+  wheel_velocity_setter
   gazebo_ros_pkgs
   rclcpp
   std_msgs
 )
 
 # Install the shared library
-install(TARGETS my_node
+install(TARGETS wheel_velocity_setter
   DESTINATION lib/${PROJECT_NAME}
 )
 

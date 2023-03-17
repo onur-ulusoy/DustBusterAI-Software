@@ -91,10 +91,10 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>0 0</sim_time>
-      <real_time>0 0</real_time>
-      <wall_time>1678719486 982731034</wall_time>
-      <iterations>0</iterations>
+      <sim_time>41 417000000</sim_time>
+      <real_time>41 698516131</real_time>
+      <wall_time>1679099378 85251075</wall_time>
+      <iterations>41417</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -106,31 +106,31 @@
         </link>
       </model>
       <model name='robot_draft'>
-        <pose>-2.08881 -4.93165 0.203834 0 -0 0</pose>
+        <pose>-2.09073 -4.93201 0.209792 -0.077751 -1.5e-05 -0.005714</pose>
         <scale>1 1 1</scale>
         <link name='caster_wheel'>
-          <pose>-2.08735 -4.45669 0.060304 3.14159 1.57079 3.14159</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0.098176 -0.002293 -9.78302 0.02557 -1.52123 1.0296</acceleration>
-          <wrench>0.196353 -0.004586 -19.566 0 -0 0</wrench>
+          <pose>-2.08662 -4.46729 0.060123 -1.57082 1.15723 -1.57653</pose>
+          <velocity>0.000617 0.001503 0.000433 -0.024648 0.009706 0.0013</velocity>
+          <acceleration>0.206827 0.577384 0.5125 -1.59286 0.350383 -2.97058</acceleration>
+          <wrench>0.413653 1.15477 1.025 0 -0 0</wrench>
         </link>
         <link name='chassis'>
-          <pose>-2.08881 -4.93165 0.203834 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0.079606 0.001012 -9.79871 0.019268 -0.109023 0.021398</acceleration>
-          <wrench>1.59211 0.020244 -195.974 0 -0 0</wrench>
+          <pose>-2.09073 -4.93201 0.209792 -0.077751 -1.5e-05 -0.005714</pose>
+          <velocity>-0.001556 -0.000194 -0.004877 0.011244 -0.022892 0.001653</velocity>
+          <acceleration>-2.2174 -0.10197 -1.64203 -1.89725 0.306117 -1.55949</acceleration>
+          <wrench>-44.3481 -2.03941 -32.8406 0 -0 0</wrench>
         </link>
         <link name='left_wheel'>
-          <pose>-2.66881 -4.93165 0.203834 3.14159 1.57079 3.14159</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.772848 -0.030507 -9.96745 -1.0963 0.349641 -2.9897</acceleration>
-          <wrench>-1.15927 -0.04576 -14.9512 0 -0 0</wrench>
+          <pose>-2.67118 -5.00845 0.215997 -1.57044 1.50353 -1.57616</pose>
+          <velocity>-0.001778 -0.0012 -0.019069 -0.003694 -0.019199 0.001613</velocity>
+          <acceleration>-2.08756 -2.14657 -19.9476 -0.182223 -0.451462 0.417952</acceleration>
+          <wrench>-3.13133 -3.21985 -29.9214 0 -0 0</wrench>
         </link>
         <link name='right_wheel'>
-          <pose>-1.50881 -4.93165 0.216481 3.14159 1.57079 3.14159</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.419462 0.020068 -9.67238 -0.25326 0.689738 -2.87547</acceleration>
-          <wrench>-0.629193 0.030102 -14.5086 0 -0 0</wrench>
+          <pose>-1.5112 -5.01508 0.216015 -1.57277 1.5614 -1.57848</pose>
+          <velocity>-0.002248 0.000662 0.007631 -0.003025 -0.010658 0.001283</velocity>
+          <acceleration>-3.02392 1.87369 16.1147 -0.356545 -0.831521 2.72476</acceleration>
+          <wrench>-4.53588 2.81053 24.172 0 -0 0</wrench>
         </link>
       </model>
       <model name='room_walls'>
@@ -185,7 +185,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>2.50028 -1.24077 1.91464 0 0.553796 -2.77039</pose>
+        <pose>6.31274 -0.518251 8.14126 0 0.833796 -3.10239</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -623,7 +623,7 @@
           </inertia>
           <pose>0 0 0 0 -0 0</pose>
         </inertial>
-        <pose>0.001456 0.474958 -0.113119 3.14158 1.57079 3.14158</pose>
+        <pose>0.001456 0.474958 -0.113119 -3.14112 1.57079 -3.14112</pose>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
@@ -723,7 +723,7 @@
           </inertia>
           <pose>0 0 0 0 -0 0</pose>
         </inertial>
-        <pose>-0.58 -0.08 0 3.14158 1.57079 3.14158</pose>
+        <pose>-0.58 -0.08 0 -3.14112 1.57079 -3.14112</pose>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
@@ -823,7 +823,7 @@
           </inertia>
           <pose>0 0 0 0 -0 0</pose>
         </inertial>
-        <pose>0.58 -0.08 0 3.14158 1.57079 3.14158</pose>
+        <pose>0.58 -0.08 0 -3.14112 1.57079 -3.14112</pose>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
@@ -1008,7 +1008,8 @@
       </joint>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>-2.08881 -4.93165 0.203834 0 -0 0</pose>
+      <plugin name='wheel_velocity_setter' filename='libwheel_velocity_setter.so'/>
+      <pose>-2.09792 -4.87773 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>

@@ -14,7 +14,7 @@ os.system(make_cmd)
 import shutil
 
 # Set the paths for the source file and destination directory
-src_file = 'libmy_node.so'
+src_file = 'libwheel_velocity_setter.so'
 dst_dir = '../output'
 
 # Copy the file to the destination directory
