@@ -32,12 +32,12 @@ try:
     # navigate to the output directory
     os.chdir('plugins/output')
 
-    # print the current working directory
+    # print the current working directory for debugging
     subprocess.run(['pwd'])
     subprocess.run(['ls'])
 
     # source the set_plugin_path.bash file
-    subprocess.run(['bash', '-c', 'source set_plugin_path.bash'])
+    os.environ["GAZEBO_PLUGIN_PATH"] = os.getcwd()
 
     # navigate back to the parent directory
     os.chdir('../../')
@@ -51,9 +51,13 @@ try:
 
     # gazebo has terminated, kill the fastdds discovery process
     os.system('pkill -f "fastdds discovery"')
+    os.system('pkill -f "gzserver"')
+
 
 except KeyboardInterrupt:
     # Handle the case when user presses Ctrl+C
     print('\nExiting the program...')
     os.system('pkill -f "fastdds discovery"')
     os.system('pkill -f "gazebo"')
+    os.system('pkill -f "gzserver"')
+
