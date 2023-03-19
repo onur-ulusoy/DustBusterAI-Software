@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            #'talker = dustbuster_nav.talker:main'
+            'driver = dustbuster_nav.driver:main'
         ],
     },
 )
