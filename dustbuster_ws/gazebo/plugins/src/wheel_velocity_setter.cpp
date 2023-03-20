@@ -42,7 +42,7 @@ namespace gazebo {
 
     void Load(physics::ModelPtr model, sdf::ElementPtr sdf) {
       // Initialize ROS 2
-      rclcpp::init(0, nullptr);
+      //rclcpp::init(0, nullptr);
 
       // Create a node for the publisher
       this->node = rclcpp::Node::make_shared("my_publisher_node");

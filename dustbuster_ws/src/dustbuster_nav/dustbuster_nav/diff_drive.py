@@ -29,24 +29,23 @@ with open('robot_params.yaml', 'r') as file:
     r_l = params['r_l']
     r_r = params['r_r']
 
-# Define the expected speed of the center of mass
-v_c = 3  # Expected speed of center of mass along longitudinal axis
-
-# Calculate the left and right wheel speeds
-w = 2  # Angular velocity of the robot 
-v_l = (v_c - d*w)
-v_r = (v_c + d*w)
-
-# Print the results
-print(f"Left wheel speed: {v_l:.2f} m/s")
-print(f"Right wheel speed: {v_r:.2f} m/s")
-
-# Calculate the angular velocities of the wheels
-w_l = v_l / r_l
-w_r = v_r / r_r
-
-
 def main():
+    # Define the expected speed of the center of mass
+    v_c = 3  # Expected speed of center of mass along longitudinal axis
+
+    # Calculate the left and right wheel speeds
+    w = 2  # Angular velocity of the robot 
+    v_l = (v_c - d*w)
+    v_r = (v_c + d*w)
+
+    # Print the results
+    print(f"Left wheel speed: {v_l:.2f} m/s")
+    print(f"Right wheel speed: {v_r:.2f} m/s")
+
+    # Calculate the angular velocities of the wheels
+    w_l = v_l / r_l
+    w_r = v_r / r_r
+
     # Print the results
     print(f"\nLeft wheel angular velocity: {w_l:.2f} rad/s")
     print(f"Right wheel angular velocity: {w_r:.2f} rad/s") 

@@ -52,6 +52,7 @@ try:
     # gazebo has terminated, kill the fastdds discovery process
     os.system('pkill -f "fastdds discovery"')
     os.system('pkill -f "gzserver"')
+    os.system('pkill -9 "gzserver"')
 
 
 except KeyboardInterrupt:
@@ -59,5 +60,5 @@ except KeyboardInterrupt:
     print('\nExiting the program...')
     os.system('pkill -f "fastdds discovery"')
     os.system('pkill -f "gazebo"')
-    os.system('pkill -f "gzserver"')
+    os.system('pkill -9 "gzserver"')
 
