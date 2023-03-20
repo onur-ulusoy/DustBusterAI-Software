@@ -91,10 +91,10 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>61 846000000</sim_time>
-      <real_time>23 296130852</real_time>
-      <wall_time>1679334107 682406431</wall_time>
-      <iterations>23002</iterations>
+      <sim_time>0 0</sim_time>
+      <real_time>0 0</real_time>
+      <wall_time>1679335410 432795673</wall_time>
+      <iterations>0</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -105,43 +105,43 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='lidar_2d'>
-        <pose>-2.85504 -1.80919 -5e-06 6.2e-05 -0.00012 -8.4e-05</pose>
-        <scale>1 1 1</scale>
-        <link name='laser_frame'>
-          <pose>-2.85504 -1.80919 -5e-06 -0.00012 -6.1e-05 1.5758</pose>
-          <velocity>1e-06 2e-06 -0.00459 0.066941 -0.124975 -1.3e-05</velocity>
-          <acceleration>-0.37683 -0.380545 -9.18223 1.4826 1.36171 -3.13262</acceleration>
-          <wrench>-0.049 -0.049483 -1.19399 0 -0 0</wrench>
-        </link>
-      </model>
       <model name='robot_draft'>
-        <pose>-2.21079 -4.83538 0.483157 -0.81422 4e-06 -0.010932</pose>
+        <pose>-2.21174 -5.05574 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='caster_wheel'>
-          <pose>-2.20667 -4.59164 0.060123 -1.57081 0.756576 -1.58174</pose>
-          <velocity>0.000625 0.001554 0.000433 -0.025501 0.009836 0.00132</velocity>
-          <acceleration>0.20917 0.575483 0.512403 -1.56384 0.336513 -2.925</acceleration>
-          <wrench>0.418341 1.15097 1.02481 0 -0 0</wrench>
+          <pose>-2.21028 -4.58078 -0.113119 -3.14126 1.57079 -3.14126</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-1.6461 -0.100539 11.1348 0.081976 0.00109 -2.12053</acceleration>
+          <wrench>-3.29221 -0.201079 22.2696 0 -0 0</wrench>
         </link>
         <link name='chassis'>
-          <pose>-2.21321 -5.05633 0.209792 -0.077751 -1.5e-05 -0.010937</pose>
-          <velocity>-0.001557 -0.00013 -0.004877 0.011125 -0.02295 0.001655</velocity>
-          <acceleration>-2.21786 -0.089853 -1.6422 -2.05964 0.283934 -1.55771</acceleration>
-          <wrench>-44.3572 -1.79705 -32.8441 0 -0 0</wrench>
+          <pose>-2.21174 -5.05574 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>1.53796 0.091111 12.0193 0.809939 -1.49762 0.865019</acceleration>
+          <wrench>30.7592 1.82221 240.386 0 -0 0</wrench>
         </link>
         <link name='left_wheel'>
-          <pose>-2.79405 -5.12975 0.215997 -1.57063 1.42706 -1.58157</pose>
-          <velocity>-0.001783 -0.001136 -0.019069 -0.004051 -0.019177 0.001617</velocity>
-          <acceleration>-2.09858 -2.13597 -19.9475 -0.348652 -0.449577 0.420534</acceleration>
-          <wrench>-3.14786 -3.20396 -29.9212 0 -0 0</wrench>
+          <pose>-2.79174 -5.13574 0 -3.14126 1.57079 -3.14126</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>1.8079 1.45888 29.5543 -2.33394 0.634242 2.48866</acceleration>
+          <wrench>2.71185 2.18832 44.3314 0 -0 0</wrench>
         </link>
         <link name='right_wheel'>
-          <pose>-1.63412 -5.14243 0.216015 -1.57158 1.54721 -1.58252</pose>
-          <velocity>-0.002244 0.000728 0.007631 -0.003328 -0.010639 0.001291</velocity>
-          <acceleration>-3.01401 1.88674 16.1142 -0.424842 -0.851028 2.74747</acceleration>
-          <wrench>-4.52101 2.83011 24.1714 0 -0 0</wrench>
+          <pose>-1.63174 -5.13574 0 -3.14126 1.57079 -3.14126</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>2.5733 -1.24161 -5.33697 3.07098 -0.386172 2.4381</acceleration>
+          <wrench>3.85995 -1.86242 -8.00545 0 -0 0</wrench>
         </link>
+        <model name='lidar_2d'>
+          <pose>-2.21682 -4.78463 0.264197 0 -0 0</pose>
+          <scale>1 1 1</scale>
+          <link name='laser_frame'>
+            <pose>-2.21682 -4.78463 0.264197 0 -0 1.57588</pose>
+            <velocity>0 0 0 0 -0 0</velocity>
+            <acceleration>0.039976 -0.154685 0.308758 -0.303012 0.029716 2.26054</acceleration>
+            <wrench>0.005198 -0.020114 0.040149 0 -0 0</wrench>
+          </link>
+        </model>
       </model>
       <model name='room_walls'>
         <pose>-1.084 -0.115 0 0 -0 0</pose>
@@ -195,7 +195,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>0.77881 -6.38906 3.22464 0 0.683275 2.30421</pose>
+        <pose>-1.55104 -6.39644 1.96861 0 0.817802 2.11621</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -733,7 +733,7 @@
           </inertia>
           <pose>0 0 0 0 -0 0</pose>
         </inertial>
-        <pose>-0.58 -0.08 -0 -3.14126 1.57079 -3.14126</pose>
+        <pose>-0.58 -0.08 0 -3.14126 1.57079 -3.14126</pose>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
@@ -920,6 +920,194 @@
           </surface>
         </collision>
       </link>
+      <model name='lidar_2d'>
+        <link name='laser_frame'>
+          <pose>0 0 0 0 -0 1.57588</pose>
+          <inertial>
+            <pose>0 0 0.035003 0 -0 0</pose>
+            <mass>0.130033</mass>
+            <inertia>
+              <ixx>2.628e-05</ixx>
+              <ixy>0</ixy>
+              <ixz>0</ixz>
+              <iyy>2.628e-05</iyy>
+              <iyz>0</iyz>
+              <izz>2.601e-05</izz>
+            </inertia>
+          </inertial>
+          <sensor name='laser' type='ray'>
+            <pose>0 0 0.052505 0 -0 0</pose>
+            <ray>
+              <scan>
+                <horizontal>
+                  <samples>540</samples>
+                  <resolution>1</resolution>
+                  <min_angle>-2.3562</min_angle>
+                  <max_angle>2.3562</max_angle>
+                </horizontal>
+                <vertical>
+                  <samples>1</samples>
+                  <min_angle>0</min_angle>
+                  <max_angle>0</max_angle>
+                </vertical>
+              </scan>
+              <range>
+                <min>0.06</min>
+                <max>5</max>
+                <resolution>0.01</resolution>
+              </range>
+              <noise>
+                <type>gaussian</type>
+                <mean>0</mean>
+                <stddev>0.001</stddev>
+              </noise>
+            </ray>
+            <plugin name='laser_controller' filename='libgazebo_ros_ray_sensor.so'>
+              <ros>
+                <argument>--ros-args --remap ~/out:=scan</argument>
+              </ros>
+              <output_type>sensor_msgs/LaserScan</output_type>
+              <frame_name>laser_frame</frame_name>
+            </plugin>
+            <always_on>0</always_on>
+            <update_rate>30</update_rate>
+            <visualize>1</visualize>
+          </sensor>
+          <self_collide>0</self_collide>
+          <enable_wind>0</enable_wind>
+          <kinematic>0</kinematic>
+          <gravity>1</gravity>
+          <visual name='visual'>
+            <pose>0 0 0 0 -0 1.5707</pose>
+            <geometry>
+              <mesh>
+                <uri>https://fuel.ignitionrobotics.org/1.0/khulqu15/models/lidar 2d v1/1/files/meshes/lidar_2d_v1.dae</uri>
+              </mesh>
+            </geometry>
+            <material>
+              <shader type='pixel'>
+                <normal_map>__default__</normal_map>
+              </shader>
+            </material>
+            <transparency>0</transparency>
+            <cast_shadows>1</cast_shadows>
+          </visual>
+          <collision name='collision_base'>
+            <laser_retro>0</laser_retro>
+            <max_contacts>10</max_contacts>
+            <pose>0 0 0.017502 0 -0 0</pose>
+            <geometry>
+              <box>
+                <size>0.050011 0.050011 0.035003</size>
+              </box>
+            </geometry>
+            <surface>
+              <friction>
+                <ode>
+                  <mu>980000</mu>
+                  <mu2>980000</mu2>
+                  <fdir1>0 0 0</fdir1>
+                  <slip1>0</slip1>
+                  <slip2>0</slip2>
+                </ode>
+                <torsional>
+                  <coefficient>1</coefficient>
+                  <patch_radius>0</patch_radius>
+                  <surface_radius>0</surface_radius>
+                  <use_patch_radius>1</use_patch_radius>
+                  <ode>
+                    <slip>0</slip>
+                  </ode>
+                </torsional>
+              </friction>
+              <bounce>
+                <restitution_coefficient>0</restitution_coefficient>
+                <threshold>1e+06</threshold>
+              </bounce>
+              <contact>
+                <collide_without_contact>0</collide_without_contact>
+                <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
+                <collide_bitmask>1</collide_bitmask>
+                <ode>
+                  <soft_cfm>0</soft_cfm>
+                  <soft_erp>0.2</soft_erp>
+                  <kp>1e+13</kp>
+                  <kd>1</kd>
+                  <max_vel>0.01</max_vel>
+                  <min_depth>0</min_depth>
+                </ode>
+                <bullet>
+                  <split_impulse>1</split_impulse>
+                  <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
+                  <soft_cfm>0</soft_cfm>
+                  <soft_erp>0.2</soft_erp>
+                  <kp>1e+13</kp>
+                  <kd>1</kd>
+                </bullet>
+              </contact>
+            </surface>
+          </collision>
+          <collision name='collision_top'>
+            <laser_retro>0</laser_retro>
+            <max_contacts>10</max_contacts>
+            <pose>0 0 0.052505 0 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <radius>0.02</radius>
+                <length>0.035003</length>
+              </cylinder>
+            </geometry>
+            <surface>
+              <friction>
+                <ode>
+                  <mu>1</mu>
+                  <mu2>1</mu2>
+                  <fdir1>0 0 0</fdir1>
+                  <slip1>0</slip1>
+                  <slip2>0</slip2>
+                </ode>
+                <torsional>
+                  <coefficient>1</coefficient>
+                  <patch_radius>0</patch_radius>
+                  <surface_radius>0</surface_radius>
+                  <use_patch_radius>1</use_patch_radius>
+                  <ode>
+                    <slip>0</slip>
+                  </ode>
+                </torsional>
+              </friction>
+              <bounce>
+                <restitution_coefficient>0</restitution_coefficient>
+                <threshold>1e+06</threshold>
+              </bounce>
+              <contact>
+                <collide_without_contact>0</collide_without_contact>
+                <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
+                <collide_bitmask>1</collide_bitmask>
+                <ode>
+                  <soft_cfm>0</soft_cfm>
+                  <soft_erp>0.2</soft_erp>
+                  <kp>1e+13</kp>
+                  <kd>1</kd>
+                  <max_vel>0.01</max_vel>
+                  <min_depth>0</min_depth>
+                </ode>
+                <bullet>
+                  <split_impulse>1</split_impulse>
+                  <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
+                  <soft_cfm>0</soft_cfm>
+                  <soft_erp>0.2</soft_erp>
+                  <kp>1e+13</kp>
+                  <kd>1</kd>
+                </bullet>
+              </contact>
+            </surface>
+          </collision>
+        </link>
+        <static>0</static>
+        <allow_auto_disable>1</allow_auto_disable>
+        <pose>0.007689 0.271264 0.190656 0 -0 0</pose>
+      </model>
       <joint name='caster_wheel_joint' type='revolute'>
         <parent>chassis</parent>
         <child>caster_wheel</child>
@@ -939,6 +1127,23 @@
             <friction>0</friction>
           </dynamics>
         </axis>
+        <physics>
+          <ode>
+            <limit>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </limit>
+            <suspension>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </suspension>
+          </ode>
+        </physics>
+      </joint>
+      <joint name='chassis_JOINT_1' type='fixed'>
+        <parent>chassis</parent>
+        <child>lidar_2d::laser_frame</child>
+        <pose>0 0 0 0 -0 0</pose>
         <physics>
           <ode>
             <limit>
@@ -1020,194 +1225,6 @@
       <allow_auto_disable>1</allow_auto_disable>
       <plugin name='velocity_setter' filename='libwheel_velocity_setter.so'/>
       <pose>-2.21174 -5.05574 0 0 -0 0</pose>
-    </model>
-    <model name='lidar_2d'>
-      <link name='laser_frame'>
-        <pose>0 0 0 0 -0 1.57588</pose>
-        <inertial>
-          <pose>0 0 0.035003 0 -0 0</pose>
-          <mass>0.130033</mass>
-          <inertia>
-            <ixx>2.628e-05</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>2.628e-05</iyy>
-            <iyz>0</iyz>
-            <izz>2.601e-05</izz>
-          </inertia>
-        </inertial>
-        <sensor name='laser' type='ray'>
-          <pose>0 0 0.052505 0 -0 0</pose>
-          <ray>
-            <scan>
-              <horizontal>
-                <samples>540</samples>
-                <resolution>1</resolution>
-                <min_angle>-2.3562</min_angle>
-                <max_angle>2.3562</max_angle>
-              </horizontal>
-              <vertical>
-                <samples>1</samples>
-                <min_angle>0</min_angle>
-                <max_angle>0</max_angle>
-              </vertical>
-            </scan>
-            <range>
-              <min>0.06</min>
-              <max>5</max>
-              <resolution>0.01</resolution>
-            </range>
-            <noise>
-              <type>gaussian</type>
-              <mean>0</mean>
-              <stddev>0.001</stddev>
-            </noise>
-          </ray>
-          <plugin name='laser_controller' filename='libgazebo_ros_ray_sensor.so'>
-            <ros>
-              <argument>--ros-args --remap ~/out:=scan</argument>
-            </ros>
-            <output_type>sensor_msgs/LaserScan</output_type>
-            <frame_name>laser_frame</frame_name>
-          </plugin>
-          <always_on>0</always_on>
-          <update_rate>30</update_rate>
-          <visualize>1</visualize>
-        </sensor>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-        <visual name='visual'>
-          <pose>0 0 0 0 -0 1.5707</pose>
-          <geometry>
-            <mesh>
-              <uri>https://fuel.ignitionrobotics.org/1.0/khulqu15/models/lidar 2d v1/1/files/meshes/lidar_2d_v1.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <shader type='pixel'>
-              <normal_map>__default__</normal_map>
-            </shader>
-          </material>
-          <transparency>0</transparency>
-          <cast_shadows>1</cast_shadows>
-        </visual>
-        <collision name='collision_base'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose>0 0 0.017502 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.050011 0.050011 0.035003</size>
-            </box>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>980000</mu>
-                <mu2>980000</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
-            </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
-          </surface>
-        </collision>
-        <collision name='collision_top'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose>0 0 0.052505 0 -0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.02</radius>
-              <length>0.035003</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
-            </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
-          </surface>
-        </collision>
-      </link>
-      <static>0</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose>-2.88463 -2.35126 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>
