@@ -1,2 +1,1 @@
-source;share/db_gazebo_plugins/environment/ament_prefix_path.sh
-source;share/db_gazebo_plugins/environment/path.sh
+/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/build/db_gazebo_plugins/ament_cmake_environment_hooks/local_setup.dsv
