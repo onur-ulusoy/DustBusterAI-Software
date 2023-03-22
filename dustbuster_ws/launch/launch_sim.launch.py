@@ -50,6 +50,7 @@ def generate_launch_description():
 
     # Robot URDF file path
     robot_urdf_file = current_working_directory + '/../description/robot_draft.urdf'
+    gframe_file = current_working_directory + '/../description/global_frame.urdf'
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -91,5 +92,5 @@ def generate_launch_description():
         robot_state_publisher,
         joint_state_publisher,
         spawn_entity,
-        rviz
+        rviz,
     ])
