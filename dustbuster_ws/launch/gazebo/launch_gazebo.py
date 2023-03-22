@@ -36,14 +36,14 @@ try:
     subprocess.run(['pwd'])
     subprocess.run(['ls'])
 
-    # source the set_plugin_path.bash file
+    # set plugin path
     os.environ["GAZEBO_PLUGIN_PATH"] = os.getcwd()
 
     # navigate back to the parent directory
     os.chdir('../../')
 
     # start gazebo in a separate process
-    gazebo_process = subprocess.Popen(['gazebo', '--verbose', 'room.world'])
+    gazebo_process = subprocess.Popen(['gazebo', '--verbose', 'legacy_room.world'])
 
     # wait for gazebo to terminate
     while gazebo_process.poll() is None:

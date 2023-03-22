@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <robot name="robot_draft">
+
+  <material name="blackfsdf">
+        <color rgba="0 0 0 1" />
+    </material>
+
   <link name="caster_wheel">
     <inertial>
       <mass value="2"/>
@@ -11,7 +16,8 @@
       <geometry>
         <cylinder radius="0.0601226" length="0.0320289"/>
       </geometry>
-      <material name="Gazebo/Grey"/>
+      <material name="blackfsdf"/>
+        
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
@@ -31,7 +37,7 @@
       <geometry>
         <cylinder radius="0.5" length="0.0966706"/>
       </geometry>
-      <material name="Gazebo/Grey"/>
+      <material name="blackfsdf"/>
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
@@ -51,7 +57,7 @@
       <geometry>
         <cylinder radius="0.216015" length="0.071441"/>
       </geometry>
-      <material name="Gazebo/Grey"/>
+      <material name="blackfsdf"/>
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
@@ -71,7 +77,7 @@
       <geometry>
         <cylinder radius="0.216015" length="0.071441"/>
       </geometry>
-      <material name="Gazebo/Grey"/>
+      <material name="blackfsdf"/>
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
