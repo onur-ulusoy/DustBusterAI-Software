@@ -1,1 +1,0 @@
-/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/build/db_gazebo_plugins/ament_cmake_environment_hooks/local_setup.sh
