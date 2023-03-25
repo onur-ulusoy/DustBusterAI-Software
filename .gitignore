@@ -22,14 +22,12 @@ __pycache__/
 *.egg-info/
 dist/
 *.egg
-*.so
 *.dylib
 *.swp
 
-# Ignore all C++ related files
+# Ignore necessary C++ output files
 *.o
 *.a
-*.so
 *.dylib
 *.obj
 *.exe
