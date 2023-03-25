@@ -12,6 +12,8 @@ This code is licensed under the MIT license.
 """
 
 import os
+import subprocess
+
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
@@ -50,7 +52,6 @@ def generate_launch_description():
 
     # Robot URDF file path
     robot_urdf_file = current_working_directory + '/../description/robot_draft.urdf'
-    gframe_file = current_working_directory + '/../description/global_frame.urdf'
 
     # Robot state publisher
     robot_state_publisher = Node(

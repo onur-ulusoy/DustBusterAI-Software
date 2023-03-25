@@ -1,6 +1,0 @@
-source;share/dustbuster_nav/hook/pythonpath.ps1
-source;share/dustbuster_nav/hook/pythonpath.dsv
-source;share/dustbuster_nav/hook/pythonpath.sh
-source;share/dustbuster_nav/hook/ament_prefix_path.ps1
-source;share/dustbuster_nav/hook/ament_prefix_path.dsv
-source;share/dustbuster_nav/hook/ament_prefix_path.sh

@@ -1,3 +1,0 @@
-[console_scripts]
-driver = dustbuster_nav.driver:maindiff_drive = dustbuster_nav.diff_drive:main
-

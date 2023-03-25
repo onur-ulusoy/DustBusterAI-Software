@@ -1,8 +1,0 @@
-source;share/db_gazebo_plugins/hook/cmake_prefix_path.ps1
-source;share/db_gazebo_plugins/hook/cmake_prefix_path.dsv
-source;share/db_gazebo_plugins/hook/cmake_prefix_path.sh
-source;share/db_gazebo_plugins/local_setup.bash
-source;share/db_gazebo_plugins/local_setup.dsv
-source;share/db_gazebo_plugins/local_setup.ps1
-source;share/db_gazebo_plugins/local_setup.sh
-source;share/db_gazebo_plugins/local_setup.zsh
