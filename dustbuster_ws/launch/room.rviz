@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /LaserScan1
+        - /Map1
       Splitter Ratio: 0.5
     Tree Height: 549
   - Class: rviz_common/Selection
@@ -53,6 +54,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        base_footprint:
+          Value: true
         caster_wheel:
           Value: true
         chassis:
@@ -60,6 +63,8 @@ Visualization Manager:
         laser_frame:
           Value: true
         left_wheel:
+          Value: true
+        odom:
           Value: true
         right_wheel:
           Value: true
@@ -69,15 +74,18 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        chassis:
-          caster_wheel:
-            {}
-          laser_frame:
-            {}
-          left_wheel:
-            {}
-          right_wheel:
-            {}
+        odom:
+          chassis:
+            base_footprint:
+              {}
+            caster_wheel:
+              {}
+            laser_frame:
+              {}
+            left_wheel:
+              {}
+            right_wheel:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -98,6 +106,10 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         caster_wheel:
           Alpha: 1
           Show Axes: false
@@ -161,14 +173,35 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /laser_controller/out
+        Value: /scan
       Use Fixed Frame: true
       Use rainbow: true
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_updates
+      Use Timestamp: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: chassis
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -211,25 +244,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 7.760380744934082
+      Distance: 11.390520095825195
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.1636834293603897
-        Y: -0.20694254338741302
-        Z: 0.39457204937934875
+        X: 0.6127068996429443
+        Y: 1.226680874824524
+        Z: 0.905234694480896
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7403980493545532
+      Pitch: 1.155397653579712
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.280402183532715
+      Yaw: 4.66041898727417
     Saved: ~
 Window Geometry:
   Displays:

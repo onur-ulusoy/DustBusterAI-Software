@@ -12,8 +12,6 @@ This code is licensed under the MIT license.
 """
 
 import os
-import subprocess
-
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
