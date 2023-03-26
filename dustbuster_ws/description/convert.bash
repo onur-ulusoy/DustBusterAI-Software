@@ -1,0 +1,1 @@
+xacro robot_draft.urdf.xacro -o robot_draft.urdf

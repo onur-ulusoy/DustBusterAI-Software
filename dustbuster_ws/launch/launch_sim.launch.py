@@ -19,6 +19,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
+from launch.actions import SetEnvironmentVariable
 
 
 def generate_launch_description():
@@ -27,7 +28,7 @@ def generate_launch_description():
     current_working_directory = os.getcwd()
 
     # Set the Gazebo plugin path
-    os.environ["GAZEBO_PLUGIN_PATH"] = current_working_directory + "/gazebo/plugins/output"
+    #os.environ["GAZEBO_PLUGIN_PATH"] = current_working_directory + "/gazebo(legacy)/plugins/output"
 
     # Get the share directory for gazebo_ros
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
@@ -84,12 +85,26 @@ def generate_launch_description():
         output='screen'
     )
 
+
+    # SLAM Toolbox
+    slam_toolbox_node = Node(
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='async_slam_toolbox_node',
+        output='screen',
+        parameters=[{'use_sim_time': True},
+                    {'slam_toolbox': {'params_file': os.path.join(current_working_directory, 'mapper_params_online_async.yaml')}}]
+    )
+
+
     # Return the launch description
     return LaunchDescription([
-        world_arg,
-        gazebo,
-        robot_state_publisher,
-        joint_state_publisher,
-        spawn_entity,
-        rviz,
-    ])
+    world_arg,
+    gazebo,
+    robot_state_publisher,
+    joint_state_publisher,
+    spawn_entity,
+    rviz,
+    slam_toolbox_node
+    
+])

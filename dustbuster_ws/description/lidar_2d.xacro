@@ -13,7 +13,7 @@
       <visual name="visual">
         <origin xyz="0 0 0" rpy="0 -0 1.5707"/>
         <geometry>
-          <mesh filename="https://fuel.ignitionrobotics.org/1.0/khulqu15/models/lidar 2d v1/1/files/meshes/lidar_2d_v1.dae"/>
+          <mesh filename="file:///home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/description/mesh/lidar_2d_v1.dae"/>
         </geometry>
       </visual>
 

@@ -3,7 +3,7 @@
 
   <xacro:include filename="lidar_2d.xacro" />
 
-  <material name="blackfsdf">
+  <material name="black">
         <color rgba="0 0 0 1" />
     </material>
 
@@ -18,7 +18,7 @@
       <geometry>
         <cylinder radius="0.0601226" length="0.0320289"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
         
     </visual>
     <collision name="collision">
@@ -39,7 +39,7 @@
       <geometry>
         <cylinder radius="0.5" length="0.0966706"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
@@ -59,7 +59,7 @@
       <geometry>
         <cylinder radius="0.216015" length="0.071441"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
@@ -79,7 +79,7 @@
       <geometry>
         <cylinder radius="0.216015" length="0.071441"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin xyz="0 0 0" rpy="0 -0 0"/>
@@ -121,6 +121,10 @@
 
   <gazebo>
     <plugin name='wheel_velocity_setter' filename='libwheel_velocity_setter.so'/>
+  </gazebo>
+
+  <gazebo>
+    <plugin name='diff_drive_wheel_encoder' filename='libdiff_drive_wheel_encoder.so'/>
   </gazebo>
 
 </robot>

@@ -4,6 +4,14 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="robot_draft">
+
+  <link name="base_footprint">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+
   <link name="laser_frame">
     <pose>0 0 0 0 -0 1.57588</pose>
     <inertial>
@@ -60,7 +68,7 @@
       </ray>
       <plugin filename="libgazebo_ros_ray_sensor.so" name="laser_controller">
         <ros>
-          <argument>--ros-args --remap ~/out:=scan</argument>
+          <remapping>~/out:=/scan</remapping>
         </ros>
         <output_type>sensor_msgs/LaserScan</output_type>
         <frame_name>laser_frame</frame_name>
@@ -70,7 +78,7 @@
       <visualize>1</visualize>
     </sensor>
   </gazebo>
-  <material name="blackfsdf">
+  <material name="black">
     <color rgba="0 0 0 1"/>
   </material>
   <link name="caster_wheel">
@@ -84,7 +92,7 @@
       <geometry>
         <cylinder length="0.0320289" radius="0.0601226"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin rpy="0 -0 0" xyz="0 0 0"/>
@@ -104,7 +112,7 @@
       <geometry>
         <cylinder length="0.0966706" radius="0.5"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin rpy="0 -0 0" xyz="0 0 0"/>
@@ -124,7 +132,7 @@
       <geometry>
         <cylinder length="0.071441" radius="0.216015"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin rpy="0 -0 0" xyz="0 0 0"/>
@@ -144,7 +152,7 @@
       <geometry>
         <cylinder length="0.071441" radius="0.216015"/>
       </geometry>
-      <material name="blackfsdf"/>
+      <material name="black"/>
     </visual>
     <collision name="collision">
       <origin rpy="0 -0 0" xyz="0 0 0"/>
@@ -179,10 +187,38 @@
     <child link="laser_frame"/>
     <origin rpy="0 0 1.570796" xyz="0 0.25 0.25"/>
   </joint>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="base_footprint"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
   <gazebo>
-    <plugin filename="libwheel_velocity_setter.so" name="wheel_velocity_setter"/>
+    <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
     
-  </gazebo>
-  
+      <!-- Wheel Information -->
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>1.06</wheel_separation>
+      <wheel_diameter>0.216015</wheel_diameter>
+
+
+      <!-- Limits -->
+      <max_wheel_torque>200</max_wheel_torque>
+      <max_wheel_acceleration>10.0</max_wheel_acceleration>
+
+            
+      <!-- Output -->
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>chassis</robot_base_frame>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+
+    </plugin>
+</gazebo>
+
 
 </robot>
