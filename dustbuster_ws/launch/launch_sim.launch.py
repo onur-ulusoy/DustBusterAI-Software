@@ -96,15 +96,26 @@ def generate_launch_description():
                     {'slam_toolbox': {'params_file': os.path.join(current_working_directory, 'mapper_params_online_async.yaml')}}]
     )
 
+    nav2_bringup_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
+
+     # Include the navigation launch file
+    navigation = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(nav2_bringup_dir, 'navigation_launch.py')),
+            launch_arguments={
+                'params_file': 'nav2_params.yaml',
+                'use_sim_time': 'true',
+            }.items()
+        )
 
     # Return the launch description
     return LaunchDescription([
-    world_arg,
-    gazebo,
-    robot_state_publisher,
-    joint_state_publisher,
-    spawn_entity,
-    rviz,
-    slam_toolbox_node
+        world_arg,
+        gazebo,
+        robot_state_publisher,
+        joint_state_publisher,
+        spawn_entity,
+        rviz,
+        slam_toolbox_node,
+        navigation
     
-])
+    ])
