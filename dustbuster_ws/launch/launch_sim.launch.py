@@ -46,11 +46,17 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py'),
         ),
-        launch_arguments={'world': LaunchConfiguration('world')}.items()
+        launch_arguments={
+            'world': LaunchConfiguration('world'),
+            'verbose': 'false',
+            'gui': 'true',
+            'headless': 'false',
+            'debug': 'false'
+        }.items()
     )
 
     # Robot URDF file path
-    robot_urdf_file = current_working_directory + '/../description/robot_draft.urdf'
+    robot_urdf_file = current_working_directory + '/../description/artuc/robot.urdf'
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -85,27 +91,15 @@ def generate_launch_description():
         output='screen'
     )
 
-
-    # SLAM Toolbox
-    slam_toolbox_node = Node(
-        package='slam_toolbox',
-        executable='async_slam_toolbox_node',
-        name='async_slam_toolbox_node',
-        output='screen',
-        parameters=[{'use_sim_time': True},
-                    {'slam_toolbox': {'params_file': os.path.join(current_working_directory, 'mapper_params_online_async.yaml')}}]
+    # Slam launch
+    online_async_launch_file = os.path.join(current_working_directory, 'online_async_launch.py')
+    online_async_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(online_async_launch_file),
+        launch_arguments={
+            'use_sim_time': 'true',
+            'params_file': os.path.join(current_working_directory, 'mapper_params_online_async.yaml'),
+        }.items()
     )
-
-    nav2_bringup_dir = os.path.join(get_package_share_directory('nav2_bringup'), 'launch')
-
-     # Include the navigation launch file
-    navigation = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(nav2_bringup_dir, 'navigation_launch.py')),
-            launch_arguments={
-                'params_file': 'nav2_params.yaml',
-                'use_sim_time': 'true',
-            }.items()
-        )
 
     # Return the launch description
     return LaunchDescription([
@@ -115,7 +109,5 @@ def generate_launch_description():
         joint_state_publisher,
         spawn_entity,
         rviz,
-        slam_toolbox_node,
-        navigation
-    
+        online_async_launch
     ])
