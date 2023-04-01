@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_draft">
+
+  <xacro:include filename="lidar_2d.xacro" />
+
+  <material name="black">
+        <color rgba="0 0 0 1" />
+    </material>
+
+  <link name="caster_wheel">
+    <inertial>
+      <mass value="2"/>
+      <inertia ixx="0.00197836" ixy="0" ixz="0" iyy="0.00197836" iyz="0" izz="0.00361478"/>
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+    </inertial>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.0601226" length="0.0320289"/>
+      </geometry>
+      <material name="black"/>
+        
+    </visual>
+    <collision name="collision">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.060123" length="0.032029"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="chassis">
+    <inertial>
+      <mass value="20"/>
+      <inertia ixx="1.26558" ixy="0" ixz="0" iyy="1.26558" iyz="0" izz="2.5"/>
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+    </inertial>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.5" length="0.0966706"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision name="collision">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.5" length="0.096671"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_wheel">
+    <inertial>
+      <mass value="1.5"/>
+      <inertia ixx="0.0181364" ixy="0" ixz="0" iyy="0.0181364" iyz="0" izz="0.0349969"/>
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+    </inertial>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.216015" length="0.071441"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision name="collision">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.216015" length="0.071441"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_wheel">
+    <inertial>
+      <mass value="1.5"/>
+      <inertia ixx="0.0181364" ixy="0" ixz="0" iyy="0.0181364" iyz="0" izz="0.0349969"/>
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+    </inertial>
+    <visual name="visual">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.216015" length="0.071441"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision name="collision">
+      <origin xyz="0 0 0" rpy="0 -0 0"/>
+      <geometry>
+        <cylinder radius="0.216015" length="0.071441"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="caster_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="caster_wheel"/>
+    <origin xyz="0 0.474958 -0.113119" rpy="-3.13946 1.57079 -3.13946"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="left_wheel"/>
+    <origin xyz="-0.58 -0.08 0" rpy="-3.13946 1.57079 -3.13946"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="right_wheel"/>
+    <origin xyz="0.58 -0.08 0" rpy="0 1.57079 0"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="laser_frame"/>
+    <origin xyz="0 0.25 0.25" rpy="0 0 1.570796"/>
+  </joint>
+
+  <gazebo>
+    <plugin name='wheel_velocity_setter' filename='libwheel_velocity_setter.so'/>
+  </gazebo>
+
+  <gazebo>
+    <plugin name='diff_drive_wheel_encoder' filename='libdiff_drive_wheel_encoder.so'/>
+  </gazebo>
+
+</robot>
