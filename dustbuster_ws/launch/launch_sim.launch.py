@@ -25,16 +25,13 @@ from launch.actions import SetEnvironmentVariable
 def generate_launch_description():
 
     # Get the current working directory
-    current_working_directory = os.getcwd()
-
-    # Set the Gazebo plugin path
-    #os.environ["GAZEBO_PLUGIN_PATH"] = current_working_directory + "/gazebo(legacy)/plugins/output"
+    cwd = os.getcwd()
 
     # Get the share directory for gazebo_ros
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
     # Declare world argument
-    world_file = os.path.join(current_working_directory, 'room.world')
+    world_file = os.path.join(cwd, 'room.world')
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_file,
@@ -56,7 +53,7 @@ def generate_launch_description():
     )
 
     # Robot URDF file path
-    robot_urdf_file = current_working_directory + '/../description/artuc/robot.urdf'
+    robot_urdf_file = cwd + '/description/dustbuster.urdf'
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -91,13 +88,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Get the config directory
+    config_dir = cwd + '/config'
+
+    # Get the slam map directory
+    slam_map_dir = config_dir + '/map_slam'
+
     # Slam launch
-    online_async_launch_file = os.path.join(current_working_directory, 'online_async_launch.py')
+    online_async_launch_file = os.path.join(cwd, 'online_async_launch.py')
     online_async_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(online_async_launch_file),
         launch_arguments={
             'use_sim_time': 'true',
-            'params_file': os.path.join(current_working_directory, 'mapper_params_online_async.yaml'),
+            'params_file': os.path.join(config_dir, 'mapper_params_online_async.yaml'),
         }.items()
     )
 
