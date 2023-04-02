@@ -91,9 +91,6 @@ def generate_launch_description():
     # Get the config directory
     config_dir = cwd + '/config'
 
-    # Get the slam map directory
-    slam_map_dir = config_dir + '/map_slam'
-
     # Slam launch
     online_async_launch_file = os.path.join(cwd, 'online_async_launch.py')
     online_async_launch = IncludeLaunchDescription(
