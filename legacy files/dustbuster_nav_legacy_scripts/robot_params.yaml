@@ -1,0 +1,10 @@
+# YAML file for defining robot parameters
+
+# Distance from center of mass to wheel axis
+d: 0.58
+
+# Left wheel radius
+r_l: 0.216015
+
+# Right wheel radius
+r_r: 0.216015

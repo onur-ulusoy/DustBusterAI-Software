@@ -12,8 +12,6 @@ This code is licensed under the MIT license.
 """
 
 import os
-import subprocess
-
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
@@ -21,21 +19,19 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
+from launch.actions import SetEnvironmentVariable
 
 
 def generate_launch_description():
 
     # Get the current working directory
-    current_working_directory = os.getcwd()
-
-    # Set the Gazebo plugin path
-    os.environ["GAZEBO_PLUGIN_PATH"] = current_working_directory + "/gazebo/plugins/output"
+    cwd = os.getcwd()
 
     # Get the share directory for gazebo_ros
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
     # Declare world argument
-    world_file = os.path.join(current_working_directory, 'room.world')
+    world_file = os.path.join(cwd, 'room.world')
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_file,
@@ -47,11 +43,17 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py'),
         ),
-        launch_arguments={'world': LaunchConfiguration('world')}.items()
+        launch_arguments={
+            'world': LaunchConfiguration('world'),
+            'verbose': 'false',
+            'gui': 'true',
+            'headless': 'false',
+            'debug': 'false'
+        }.items()
     )
 
     # Robot URDF file path
-    robot_urdf_file = current_working_directory + '/../description/robot_draft.urdf'
+    robot_urdf_file = cwd + '/description/dustbuster.urdf'
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -86,6 +88,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Get the config directory
+    config_dir = cwd + '/config'
+
+    # Slam launch
+    online_async_launch_file = os.path.join(cwd, 'online_async_launch.py')
+    online_async_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(online_async_launch_file),
+        launch_arguments={
+            'use_sim_time': 'true',
+            'params_file': os.path.join(config_dir, 'mapper_params_online_async.yaml'),
+        }.items()
+    )
+
     # Return the launch description
     return LaunchDescription([
         world_arg,
@@ -94,4 +109,5 @@ def generate_launch_description():
         joint_state_publisher,
         spawn_entity,
         rviz,
+        online_async_launch
     ])
