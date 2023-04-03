@@ -118,6 +118,7 @@ controller_server:
     progress_checker_plugin: "progress_checker"
     goal_checker_plugins: ["general_goal_checker"] # "precise_goal_checker"
     controller_plugins: ["FollowPath"]
+    #footprint: "[ [0.62, 0], [0.191, 0.594], [-0.5, 0.367], [-0.5, -0.367], [0.191, -0.594] ]"
 
     # Progress checker parameters
     progress_checker:
@@ -133,8 +134,8 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.4
-      yaw_goal_tolerance: 0.4
+      xy_goal_tolerance: 0.35
+      yaw_goal_tolerance: 0.25
     # DWB parameters
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
@@ -190,12 +191,13 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.58
+      #footprint: "[ [0.62, 0], [0.191, 0.594], [-0.5, 0.367], [-0.5, -0.367], [0.191, -0.594] ]"
+      robot_radius: 0.7
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        inflation_radius: 0.65
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -229,7 +231,8 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: True
-      robot_radius: 0.58
+      #footprint: "[ [0.62, 0], [0.191, 0.594], [-0.5, 0.367], [-0.5, -0.367], [0.191, -0.594] ]"
+      robot_radius: 0.7
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
@@ -253,7 +256,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        inflation_radius: 0.65
       always_send_full_costmap: True
 
 map_server:
@@ -338,7 +341,7 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.99, 0.0, 1.0]
+    max_velocity: [0.99, 0.0, 2.0]
     min_velocity: [-0.26, 0.0, -1.0]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
