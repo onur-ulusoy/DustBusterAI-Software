@@ -3,7 +3,7 @@ launch_sim.launch.py
 
 Standalone launch file to run Gazebo, RViz, robot state publisher, joint state publisher, and spawn the robot in the room.
 
-Usage: ros2 launch launch_sim.launch.py
+Usage: ros2 launch dustbuster_launch launch_sim.launch.py
 
 Author: Onur Ulusoy
 Date: 22.03.2023
@@ -19,19 +19,15 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
-from launch.actions import SetEnvironmentVariable
-
 
 def generate_launch_description():
 
-    # Get the current working directory
-    cwd = os.getcwd()
-
-    # Get the share directory for gazebo_ros
+    # Get the share directory for dustbuster_launch, gazebo_ros
+    pkg_dustbuster_launch = get_package_share_directory('dustbuster_launch')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
     # Declare world argument
-    world_file = os.path.join(cwd, 'room.world')
+    world_file = os.path.join(pkg_dustbuster_launch, 'worlds', 'room.world')
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_file,
@@ -53,7 +49,7 @@ def generate_launch_description():
     )
 
     # Robot URDF file path
-    robot_urdf_file = cwd + '/description/dustbuster.urdf'
+    robot_urdf_file = os.path.join(pkg_dustbuster_launch, 'urdf', 'dustbuster.urdf')
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -84,15 +80,15 @@ def generate_launch_description():
     rviz = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', 'room.rviz'],
+        arguments=['-d', os.path.join(pkg_dustbuster_launch, 'rviz', 'room.rviz')],
         output='screen'
     )
 
     # Get the config directory
-    config_dir = cwd + '/config'
+    config_dir = os.path.join(pkg_dustbuster_launch, 'config')
 
     # Slam launch
-    online_async_launch_file = os.path.join(cwd, 'online_async_launch.py')
+    online_async_launch_file = os.path.join(pkg_dustbuster_launch, 'launch', 'online_async_launch.py')
     online_async_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(online_async_launch_file),
         launch_arguments={
@@ -111,3 +107,4 @@ def generate_launch_description():
         rviz,
         online_async_launch
     ])
+
