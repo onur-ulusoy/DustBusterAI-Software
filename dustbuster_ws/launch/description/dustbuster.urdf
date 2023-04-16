@@ -51,8 +51,8 @@
   <link name="chassis">
   <inertial>
     <mass value="22.5"/>
-    <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
-    <origin rpy="0 -0 0" xyz="0.15 0 0"/> <!-- x: 0 -->
+    <inertia ixx="0.413495" ixy="-0.001" ixz="-0.031" iyy="0.5608725" iyz="0.00" izz="0.8594225" />
+    <origin rpy="0 -0 0" xyz="0 0 0"/> <!-- x: 0 -->
   </inertial>
   <visual name="visual">
     <origin rpy="0 -0 0" xyz="0 0 0"/> <!-- x: 0 -->
@@ -68,7 +68,6 @@
     </geometry>
   </collision>
 </link>
-
 
   <!-- <gazebo reference="chassis">
     <material>Gazebo/Orange</material>
@@ -147,6 +146,35 @@
       </friction>
     </surface>
   </gazebo>
+
+  <!-- CASTER WHEEL MOUNT LINK -->
+  <link name="caster_wheel_mount">
+    <visual>
+      <geometry>
+        <box size="0.025 0.025 0.06"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.1"/> 
+      <inertia ixx="1.0416666666666665e-05" ixy="0.0" ixz="0.0" iyy="1.0416666666666665e-05" iyz="0.0" izz="1.6666666666666667e-05"/>
+    </inertial>
+  </link>
+
+  <joint name="caster_wheel_mount_joint" type="revolute">
+    <parent link="chassis"/>
+    <child link="caster_wheel_mount"/>
+    <origin rpy="0 0 0" xyz="0.35 0 -0.065"/> <!-- x: 0.35 -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159265" upper="3.14159265" effort="1.0" velocity="2.0"/>
+  </joint>
+
   <!-- CASTER WHEEL LINK -->
   <link name="caster_wheel">
     <visual>
@@ -179,11 +207,15 @@
     </surface>
   </gazebo>
 
-  <joint name="caster_wheel_joint" type="fixed">
-    <parent link="chassis"/>
+  <!-- CASTER WHEEL JOINT -->
+  <joint name="caster_wheel_joint" type="revolute">
+    <parent link="caster_wheel_mount"/>
     <child link="caster_wheel"/>
-    <origin rpy="1.5707963267948966 0 0" xyz="0.35 0 -0.09"/> <!-- x: 0.35 -->
+    <origin rpy="1.5707963267948966 0 0" xyz="0 0 -0.025"/> <!-- x: 0.35 -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159265" upper="3.14159265" effort="1.0" velocity="2.0"/>
   </joint>
+
 
   <joint name="laser_joint" type="fixed">
     <parent link="chassis"/>
@@ -248,6 +280,7 @@
     <child link="camera_link"/>
     <origin rpy="0 0 0" xyz="0.276 0 0.181"/> <!-- x: 0.276 -->
   </joint>
+
   <link name="camera_link">
     <visual>
       <geometry>
@@ -262,7 +295,13 @@
       </geometry>
       <material name="black"/>
     </visual>
-  </link>
+    <inertial> <!--inertial parameters of camera_link is used to balance the center of mass, they do not actually belong to camera-->
+      <mass value="3.0"/> 
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+</link>
+
   <joint name="camera_optical_joint" type="fixed">
     <parent link="camera_link"/>
     <child link="camera_link_optical"/>
