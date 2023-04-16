@@ -1,14 +1,16 @@
-"""
-launch_sim.launch.py
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-Standalone launch file to run Gazebo, RViz, robot state publisher, joint state publisher, and spawn the robot in the room.
+"""
+@brief: Launch file for Dustbuster robot simulation and visualization.
+
+This script runs Gazebo, RViz, SLAM, Nav2, robot state publisher, joint state publisher, and spawns the robot in the room.
 
 Usage: ros2 launch dustbuster_launch launch_sim.launch.py
 
-Author: Onur Ulusoy
-Date: 22.03.2023
-
-This code is licensed under the MIT license.
+@author: Onur Ulusoy
+@date: 22.03.2023
+@license: MIT
 """
 
 import os

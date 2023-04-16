@@ -7,6 +7,8 @@
 @author: Onur Ulusoy
 @date: 01/04/2023
 
+Usage: ros2 launch dustbuster_launch launch_sim.launch.py
+
 @section LICENSE
 
 This code is licensed under the MIT license.

@@ -1,5 +1,5 @@
 """
-Launch file for starting the SLAM toolbox node.
+@brief: Launch file for starting the SLAM toolbox node.
 
 This file launches the async_slam_toolbox_node from the slam_toolbox package using
 the specified parameters file. The node subscribes to the sensor data and publishes
@@ -9,12 +9,16 @@ The launch file also declares the 'use_sim_time' argument to determine whether t
 simulation/Gazebo clock or not, and the 'slam_params_file' argument to specify the full
 path to the ROS2 parameters file to use for the SLAM toolbox node.
 
-Note:
+@note:
 Part of the file was retrieved from the Articulated Robotics repository: https://github.com/joshnewans
 and modified for use in this project.
 
 See Also:
 slam_toolbox package: https://github.com/SteveMacenski/slam_toolbox
+
+@author: Onur Ulusoy
+@date: 22.03.2023
+@license: MIT
 """
 
 import os

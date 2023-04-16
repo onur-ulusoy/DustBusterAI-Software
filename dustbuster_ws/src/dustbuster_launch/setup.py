@@ -1,8 +1,27 @@
+#!/usr/bin/env python3
+"""
+@file: Dustbuster Launch Package Setup
+@author: Onur Ulusoy
+@date: 2023-04-16
+@license: MIT
+
+This script sets up the Dustbuster Launch package. It handles the inclusion
+of required directories and files, as well as package metadata and entry points.
+"""
+
 import os
 from glob import glob
 from setuptools import setup
+from pathlib import Path
 
 package_name = 'dustbuster_launch'
+
+def collect_files(directory):
+    collected_files = []
+    for path in Path(os.path.join(package_name, directory)).rglob('*.*'):
+        install_path = os.path.join('share', package_name, str(path.parent)[len(package_name) + 1:])
+        collected_files.append((install_path, [str(path)]))
+    return collected_files
 
 setup(
     name=package_name,
@@ -12,8 +31,11 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        # Include all launch files
         (os.path.join('share', package_name, 'launch'), glob('launch/*launch.[pxy][yma]*')),
+        # Include all files in the config directory, including subdirectories
+        *collect_files('config'),
+        # Include all files in the description directory, including subdirectories
+        *collect_files('description'),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
