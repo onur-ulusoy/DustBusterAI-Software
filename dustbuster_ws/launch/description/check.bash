@@ -1,1 +1,1 @@
-check_urdf robot_draft.urdf
+check_urdf dustbuster.urdf
