@@ -99,6 +99,14 @@ def generate_launch_description():
         }.items()
     )
 
+    # Nav2 Bringup launch
+    nav2_bringup_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(pkg_dustbuster_launch, 'launch', 'nav2_bringup.launch.py')),
+        launch_arguments={
+            'map_subscribe_transient_local': 'true'
+        }.items()
+    )
+
     # Return the launch description
     return LaunchDescription([
         world_arg,
@@ -107,6 +115,7 @@ def generate_launch_description():
         joint_state_publisher,
         spawn_entity,
         rviz,
-        online_async_launch
+        online_async_launch,
+        nav2_bringup_launch
     ])
 
