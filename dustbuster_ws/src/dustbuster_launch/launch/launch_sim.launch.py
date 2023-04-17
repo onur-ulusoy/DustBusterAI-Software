@@ -28,8 +28,11 @@ def generate_launch_description():
     pkg_dustbuster_launch = get_package_share_directory('dustbuster_launch')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
+    # Get the config directory
+    config_dir = os.path.join(pkg_dustbuster_launch, 'config')
+
     # Declare world argument
-    world_file = os.path.join(pkg_dustbuster_launch, 'worlds', 'room.world')
+    world_file = os.path.join(config_dir, 'gazebo_worlds', 'room.world')
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_file,
@@ -51,7 +54,7 @@ def generate_launch_description():
     )
 
     # Robot URDF file path
-    robot_urdf_file = os.path.join(pkg_dustbuster_launch, 'urdf', 'dustbuster.urdf')
+    robot_urdf_file = os.path.join(pkg_dustbuster_launch, 'description', 'dustbuster.urdf')
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -82,12 +85,9 @@ def generate_launch_description():
     rviz = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', os.path.join(pkg_dustbuster_launch, 'rviz', 'room.rviz')],
+        arguments=['-d', os.path.join(config_dir, 'rviz', 'dustbuster.rviz')],
         output='screen'
     )
-
-    # Get the config directory
-    config_dir = os.path.join(pkg_dustbuster_launch, 'config')
 
     # Slam launch
     online_async_launch_file = os.path.join(pkg_dustbuster_launch, 'launch', 'online_async_launch.py')

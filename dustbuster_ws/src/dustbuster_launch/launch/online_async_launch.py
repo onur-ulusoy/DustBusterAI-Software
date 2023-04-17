@@ -58,10 +58,15 @@ def generate_launch_description():
                                     default_params_file],
                                condition=UnlessCondition(has_node_params))
 
+    # Get the path to the package and the map file
+    package_path = get_package_share_directory('dustbuster_launch')
+    map_file_path = os.path.join(package_path, 'config', 'map_slam', 'map')
+
     start_async_slam_toolbox_node = Node(
         parameters=[
           actual_params_file,
-          {'use_sim_time': use_sim_time}
+          {'use_sim_time': use_sim_time},
+          {'map_file_name': map_file_path},
         ],
         package='slam_toolbox',
         executable='async_slam_toolbox_node',

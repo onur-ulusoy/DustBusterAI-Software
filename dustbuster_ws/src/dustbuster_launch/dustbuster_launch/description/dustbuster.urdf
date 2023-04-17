@@ -1,17 +1,14 @@
 <?xml version="1.0" ?>
+<!-- @file dustbuster.urdf
+@brief This file contains the description of the DustBuster robot model.
+
+@details This file includes the robot's links, joints, materials, sensors, and other properties used in the simulation, nav2 and slam.
+-->
 <robot name="dustbuster">
   <!-- Specify some standard inertial calculations https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
   <!-- These make use of xacro's mathematical functionality -->
   <material name="white">
     <color rgba="1 1 1 1"/>
-  </material>
-
-  <material name="orange">
-    <color rgba="1 0.3 0.1 1"/>
-  </material>
-
-  <material name="blue">
-    <color rgba="0.2 0.2 1 1"/>
   </material>
 
   <material name="grey">
@@ -26,9 +23,6 @@
     <color rgba="0 0 0 1"/>
   </material>
 
-  <material name="red">
-    <color rgba="1 0 0 1"/>
-  </material>
   <!-- BASE LINK -->
   <link name="base_link">
 
@@ -49,29 +43,33 @@
   </joint>
   
   <link name="chassis">
-  <inertial>
-    <mass value="22.5"/>
-    <inertia ixx="0.413495" ixy="-0.001" ixz="-0.031" iyy="0.5608725" iyz="0.00" izz="0.8594225" />
-    <origin rpy="0 -0 0" xyz="0 0 0"/> <!-- x: 0 -->
-  </inertial>
-  <visual name="visual">
-    <origin rpy="0 -0 0" xyz="0 0 0"/> <!-- x: 0 -->
-    <geometry>
-      <mesh filename="file:///home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/launch/description/mesh/chassis.stl"/>
-    </geometry>
-    <material name="steel"/>
-  </visual>
-  <collision name="collision">
-    <origin rpy="0 -0 0" xyz="0 0 0"/>
-    <geometry>
-      <mesh filename="file:///home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/launch/description/mesh/chassis.stl"/>
-    </geometry>
-  </collision>
-</link>
+    <inertial>
+      <mass value="22.5"/>
+      <inertia ixx="0.413495" ixy="-0.001" ixz="-0.031" iyy="0.5608725" iyz="0.00" izz="0.8594225" />
+      <origin rpy="0 -0 0" xyz="0 0 0"/> <!-- x: 0 -->
+    </inertial>
+    <visual name="visual">
+      <origin rpy="0 -0 0" xyz="0 0 0"/> <!-- x: 0 -->
 
-  <!-- <gazebo reference="chassis">
-    <material>Gazebo/Orange</material>
-  </gazebo> -->
+    <!-- Import mesh from package doesn't work -->
+    <!-- https://answers.ros.org/question/401649/gazebo-does-not-spawn-mesh/-->
+    <geometry>
+      <mesh filename="file:///home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_launch/dustbuster_launch/description/mesh/chassis.stl"/>
+    </geometry>
+      <material name="steel"/>
+    </visual>
+
+    <!-- Import mesh from package doesn't work -->
+    <!-- https://answers.ros.org/question/401649/gazebo-does-not-spawn-mesh/-->
+    <collision name="collision">
+      <origin rpy="0 -0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="file:///home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_launch/dustbuster_launch/description/mesh/chassis.stl"/>
+      </geometry>
+    </collision>
+
+  </link>
+
 
   <!-- LEFT WHEEL LINK -->
   <joint name="left_wheel_joint" type="continuous">
