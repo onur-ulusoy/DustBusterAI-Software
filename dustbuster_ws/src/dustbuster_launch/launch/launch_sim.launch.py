@@ -4,7 +4,7 @@
 """
 @brief: Launch file for Dustbuster robot simulation and visualization.
 
-This script runs Gazebo, RViz, SLAM, Nav2, robot state publisher, joint state publisher, and spawns the robot in the room.
+This script runs Gazebo, RViz, Cartographer, Nav2, robot state publisher, joint state publisher, and spawns the robot in the room.
 
 Usage: ros2 launch dustbuster_launch launch_sim.launch.py
 
@@ -89,16 +89,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Slam launch
-    online_async_launch_file = os.path.join(pkg_dustbuster_launch, 'launch', 'online_async_launch.py')
-    online_async_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(online_async_launch_file),
-        launch_arguments={
-            'use_sim_time': 'true',
-            'params_file': os.path.join(config_dir, 'mapper_params_online_async.yaml'),
-        }.items()
-    )
-
     # Nav2 Bringup launch
     nav2_bringup_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg_dustbuster_launch, 'launch', 'nav2_bringup.launch.py')),
@@ -115,7 +105,6 @@ def generate_launch_description():
         joint_state_publisher,
         spawn_entity,
         rviz,
-        online_async_launch,
         nav2_bringup_launch
     ])
 
