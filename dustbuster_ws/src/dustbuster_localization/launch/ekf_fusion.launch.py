@@ -33,7 +33,19 @@ def generate_launch_description():
                     'imu0_relative': False,
                     'imu0_remove_gravitational_acceleration': True,
                     'publish_tf': True,
-                    'publish_acceleration': False
+                    'publish_acceleration': False,
+                    'odom0_process_noise_covariance': [1e-5, 0, 0, 0, 0, 0,
+                                                        0, 1e-5, 0, 0, 0, 0,
+                                                        0, 0, 1e-5, 0, 0, 0,
+                                                        0, 0, 0, 1e-5, 0, 0,
+                                                        0, 0, 0, 0, 1e-5, 0,
+                                                        0, 0, 0, 0, 0, 1e-5],
+                    'imu0_process_noise_covariance': [1e-5, 0, 0, 0, 0, 0,
+                                                      0, 1e-5, 0, 0, 0, 0,
+                                                      0, 0, 1e-5, 0, 0, 0,
+                                                      0, 0, 0, 1e-5, 0, 0,
+                                                      0, 0, 0, 0, 1e-5, 0,
+                                                      0, 0, 0, 0, 0, 1e-5]
                 }
             ],
             output='screen'

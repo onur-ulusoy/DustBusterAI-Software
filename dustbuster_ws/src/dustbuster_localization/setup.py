@@ -18,5 +18,10 @@ setup(
     maintainer_email='onurulusoys4@gmail.com',
     description='ROS2 localization package for DustBusterAI',
     license='MIT',
-    tests_require=['pytest']
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'imu_filter = dustbuster_localization.imu_filter:main',
+        ],
+    },
 )
