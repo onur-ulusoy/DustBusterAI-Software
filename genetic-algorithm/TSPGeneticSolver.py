@@ -92,15 +92,19 @@ class TSPGeneticSolver:
         return best_tour, 1/best_fitness, fitness_values
 
     def visualize(self, tour, fitness_values, fitness_scores):
+        # Print the optimal tour and its length
+        print('Optimal Tour:', tour)
+        print('Tour Length:', 1 / fitness_scores[0])
+        
         # Plot the fitness vs generations, optimal tour and total tour length vs generations graphs
         fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(6, 10))
-        
+
         # Fitness vs Generations
         ax1.plot(fitness_values)
         ax1.set_xlabel('Generation')
         ax1.set_ylabel('Fitness')
         ax1.set_title('Fitness vs Generations')
-        
+
         # Optimal Tour
         x = [self.coords[tour[i]][0] for i in range(len(tour))]
         x.append(self.coords[tour[0]][0])
@@ -110,33 +114,33 @@ class TSPGeneticSolver:
         ax2.set_xlabel('X')
         ax2.set_ylabel('Y')
         ax2.set_title('Optimal Tour')
-        
+
+        # Add numbers to the Optimal Tour graph
+        for i, (x_i, y_i) in enumerate(zip(x, y)):
+            if i < len(self.cities):
+                ax2.annotate(str(i + 1), (x_i, y_i), textcoords='offset points', xytext=(0, -4), ha='center', fontsize=12)
+
         # Total Tour Length vs Generations
-        tour_lengths = [1/fitness for fitness in fitness_scores]
+        tour_lengths = [1 / fitness for fitness in fitness_scores]
         ax3.plot(tour_lengths)
         ax3.set_xlabel('Generation')
         ax3.set_ylabel('Total Tour Length')
         ax3.set_title('Total Tour Length vs Generations')
-        
+
         # Display the plots
         plt.tight_layout()
         plt.show()
-        
-        # Print the optimal tour and its length
-        print('Optimal Tour:', tour)
-        print('Tour Length:', 1/fitness_scores[0])
 
 
 def main():
     cities = ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'I', 'J', 'K', 'L', 'G']
     coords = {'A': (0, 0), 'B': (0, 5), 'C': (5, 5), 'D': (5, 0), 'E': (3, 3), 'F': (1, 1),
-              'G': (0.5, 1.5), 'H': (0.78, 6), 'I': (2.2, 1), 'J': (5, 6), 'K': (3.3, 3), 'L': (0, 1)}
+              'G': (4.25, 1.5), 'H': (0.78, 6), 'I': (2.2, 1), 'J': (5, 6), 'K': (3.3, 3), 'L': (0, 1)}
     
     solver = TSPGeneticSolver(cities, coords)
     solver.create_population()
     best_tour, tour_length, fitness_values = solver.solve()
     solver.visualize(best_tour, fitness_values, [solver.fitness(tour) for tour in solver.population])
-
 
 if __name__=="__main__":
     main()
