@@ -1,9 +1,13 @@
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
 import random
-import math
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 class TSPGeneticSolver:
+
     def __init__(self, coords, pop_size=100, elite_size=20, mutation_rate=0.01, generations=500):
         self.coords = coords
         self.distances = {}
@@ -172,29 +176,49 @@ class TSPGeneticSolver:
 
         return x,y
 
+class TSPSolverNode(Node):
+    def __init__(self):
+        super().__init__('tsp_solver_node')
+        self.publisher_ = self.create_publisher(String, 'tsp_optimal_tour', 10)
+
+    def publish_optimal_tour(self):
+        pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
+        sample_rate = 20
+        origin_x = -2.9
+        origin_y = -4.05
+
+        image = load_pgm_image(pgm_file)
+        coords = discretize_walkable_area(image, sample_rate)
+        resolution = 0.05
+        origin = (origin_x, origin_y)
+
+        points = return_points(coords, image.shape, sample_rate, resolution, origin)
+
+        solver = TSPGeneticSolver(points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=650)
+        best_tour, best_length, fitness_values = solver.solve()
+        x, y = solver.get_optimal_tour_points(best_tour)
+
+        msg = String()
+        msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
+        self.publisher_.publish(msg)
+
+
+import os, sys
+module_dir = os.path.abspath("/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation")
+sys.path.insert(0, module_dir)
 
 from map_discretizer import *
-def main():
-    pgm_file = "map2.pgm"
-    sample_rate = 20
-    origin_x = -2.9
-    origin_y = -4.05
 
-    image = load_pgm_image(pgm_file)
-    coords = discretize_walkable_area(image, sample_rate)
-    resolution = 0.05
-    origin = (origin_x, origin_y)
+def main(args=None):
+    rclpy.init(args=args)
+    tsp_solver_node = TSPSolverNode()
 
-    #plot_walkable_area(coords, image.shape, sample_rate, resolution, origin)
-    points = return_points(coords, image.shape, sample_rate, resolution, origin)
+    # Call the publish_optimal_tour method directly after creating the node instance
+    tsp_solver_node.publish_optimal_tour()
 
-    solver = TSPGeneticSolver(points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=650)
-    best_tour, best_length, fitness_values = solver.solve()
-    #solver.visualize(best_tour, fitness_values)
-    solver.visualize_optimal_tour(best_tour)
-    x,y = solver.get_optimal_tour_points(best_tour)
-    for xi, yi in zip(x, y):
-        print(xi, yi)
+    # No need to spin the node since we only want to publish once
+    tsp_solver_node.destroy_node()
+    rclpy.shutdown()
 
 if __name__ == "__main__":
     main()

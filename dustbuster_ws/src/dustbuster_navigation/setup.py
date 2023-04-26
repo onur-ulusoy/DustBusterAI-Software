@@ -21,8 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'save_map = dustbuster_navigation.save_map:main',
-            'explorer = dustbuster_navigation.explorer:main'
-
+            'explorer = dustbuster_navigation.explorer:main',
+            'TSPGeneticSolver = dustbuster_navigation.TSPGeneticSolver:main'
         ],
     },
 )
