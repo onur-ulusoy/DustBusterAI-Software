@@ -4,17 +4,19 @@ from nav_msgs.msg import OccupancyGrid
 import numpy as np
 import cv2
 import yaml
+import argparse
 
-class CostmapSaver(Node):
+class MapSaver(Node):
 
-    def __init__(self):
-        super().__init__('costmap_saver')
+    def __init__(self, map_name):
+        super().__init__('map_saver')
         self.subscription = self.create_subscription(
             OccupancyGrid,
-            '/global_costmap/costmap',
+            '/map',
             self.listener_callback,
             10
         )
+        self.map_name = map_name
 
     def listener_callback(self, msg):
         # Extract data from message
@@ -28,11 +30,11 @@ class CostmapSaver(Node):
 
         # Convert data to image and save as .pgm file
         image = cv2.convertScaleAbs(data, alpha=(255.0/100.0))
-        cv2.imwrite('map.pgm', image)
+        cv2.imwrite(f'{self.map_name}.pgm', image)
 
         # Save metadata as .yaml file
         metadata = {
-            'image': 'map.pgm',
+            'image': f'{self.map_name}.pgm',
             'resolution': resolution,
             'origin': {
                 'position': {
@@ -48,21 +50,23 @@ class CostmapSaver(Node):
                 }
             }
         }
-        with open('map.yaml', 'w') as f:
+        with open(f'{self.map_name}.yaml', 'w') as f:
             yaml.dump(metadata, f)
 
-        self.get_logger().info('Costmap data saved to map.pgm and map.yaml')
+        self.get_logger().info(f'Map data saved to {self.map_name}.pgm and {self.map_name}.yaml')
+        self.destroy_node()
         rclpy.shutdown()
 
 def main(args=None):
     rclpy.init(args=args)
 
-    costmap_saver = CostmapSaver()
+    parser = argparse.ArgumentParser(description='Save map to file')
+    parser.add_argument('map_name', metavar='map_name', type=str, help='name of the map to save')
+    args = parser.parse_args()
 
-    rclpy.spin(costmap_saver)
+    map_saver = MapSaver(args.map_name)
 
-    costmap_saver.destroy_node()
-    rclpy.shutdown()
+    rclpy.spin(map_saver)
 
 if __name__ == '__main__':
     main()

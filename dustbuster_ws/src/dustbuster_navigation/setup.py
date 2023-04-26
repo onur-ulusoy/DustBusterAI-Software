@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'save_costmap = dustbuster_navigation.save_costmap:main'
+            'save_map = dustbuster_navigation.save_map:main',
+            'explorer = dustbuster_navigation.explorer:main'
+
         ],
     },
 )
