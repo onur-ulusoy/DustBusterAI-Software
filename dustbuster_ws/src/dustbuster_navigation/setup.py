@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'save_map = dustbuster_navigation.save_map:main',
             'explorer = dustbuster_navigation.explorer:main',
-            'TSPGeneticSolver = dustbuster_navigation.TSPGeneticSolver:main'
+            'TSPGeneticSolver = dustbuster_navigation.TSPGeneticSolver:main',
+            'WaypointsNavigation = dustbuster_navigation.WaypointsNavigation:main',
         ],
     },
 )
