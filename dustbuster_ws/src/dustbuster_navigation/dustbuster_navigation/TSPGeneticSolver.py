@@ -183,7 +183,7 @@ class TSPSolverNode(Node):
 
     def publish_optimal_tour(self):
         pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
-        sample_rate = 20
+        sample_rate = 30
         origin_x = -2.9
         origin_y = -4.05
 
@@ -194,13 +194,14 @@ class TSPSolverNode(Node):
 
         points = return_points(coords, image.shape, sample_rate, resolution, origin)
 
-        solver = TSPGeneticSolver(points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=650)
+        solver = TSPGeneticSolver(points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
         best_tour, best_length, fitness_values = solver.solve()
         x, y = solver.get_optimal_tour_points(best_tour)
 
         msg = String()
         msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
         self.publisher_.publish(msg)
+        solver.visualize_optimal_tour(best_tour)
 
 
 import os, sys

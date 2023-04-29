@@ -19,6 +19,7 @@ class WaypointsNavigation(Node):
         self.action_client = ActionClient(self, FollowWaypoints, 'follow_waypoints')
         self.waypoints = []
         self.marker_array_pub = self.create_publisher(MarkerArray, 'waypoints_markers', 10)
+        self.marker_pub = self.create_publisher(MarkerArray, 'waypoints_labels', 10)
 
     def waypoints_callback(self, msg):
         data = msg.data.strip().split(';')
@@ -37,7 +38,8 @@ class WaypointsNavigation(Node):
             
         self.get_logger().info(f"Number of waypoints: {len(self.waypoints)}")
         self.publish_markers()
-        self.send_navigation_goal()  # Add this line
+        self.publish_labels()
+        self.send_navigation_goal()
 
 
     def send_navigation_goal(self):
@@ -70,7 +72,31 @@ class WaypointsNavigation(Node):
             marker.color.g = 1.0
             marker.color.b = 0.0
             marker_array.markers.append(marker)
+
         self.marker_array_pub.publish(marker_array)
+    
+    def publish_labels(self):
+        marker_array = MarkerArray()
+
+        for i, waypoint in enumerate(self.waypoints[:-1]):  # Exclude the last waypoint
+            text_marker = Marker()
+            text_marker.header.frame_id = 'map'
+            text_marker.ns = 'waypoint_labels'
+            text_marker.id = i
+            text_marker.type = Marker.TEXT_VIEW_FACING
+            text_marker.action = Marker.ADD
+            text_marker.pose.position = waypoint.pose.position
+            text_marker.pose.position.z += 0.5  # Adjust the height of the text label
+            text_marker.pose.orientation.w = 1.0
+            text_marker.scale.z = 0.3  # Adjust the size of the text
+            text_marker.color.a = 1.0
+            text_marker.color.r = 1.0
+            text_marker.color.g = 1.0
+            text_marker.color.b = 1.0
+            text_marker.text = str(i + 1)  # Set the text to the waypoint index, add 1
+            marker_array.markers.append(text_marker)
+
+        self.marker_pub.publish(marker_array)
 
 
 def main(args=None):
