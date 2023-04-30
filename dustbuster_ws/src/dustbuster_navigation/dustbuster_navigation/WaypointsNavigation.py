@@ -3,8 +3,10 @@ from rclpy.node import Node
 from std_msgs.msg import String
 from nav2_msgs.action import FollowWaypoints
 from rclpy.action import ActionClient
-from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped, Twist
 from visualization_msgs.msg import Marker, MarkerArray
+from nav2_msgs.action import NavigateToPose
+
 
 class WaypointsNavigation(Node):
 
@@ -20,6 +22,15 @@ class WaypointsNavigation(Node):
         self.waypoints = []
         self.marker_array_pub = self.create_publisher(MarkerArray, 'waypoints_markers', 10)
         self.marker_pub = self.create_publisher(MarkerArray, 'waypoints_labels', 10)
+        self.threshold = 0.7  # Threshold for robot speed (m/s) to detect deacceleration
+        self.last_speed = 0.0  # Initialize robot speed
+        self.cmd_vel_subscription = self.create_subscription(
+            Twist,
+            'cmd_vel',
+            self.cmd_vel_callback,
+            10 )
+        self.current_goal_index = 0
+        self.robot_started_moving = False
 
     def waypoints_callback(self, msg):
         data = msg.data.strip().split(';')
@@ -41,6 +52,16 @@ class WaypointsNavigation(Node):
         self.publish_labels()
         self.send_navigation_goal()
 
+    def cmd_vel_callback(self, msg):
+        if self.current_goal_index < len(self.waypoints) - 1:
+            linear_speed = msg.linear.x
+            if linear_speed > self.speed_threshold:
+                self.robot_started_moving = True
+
+            if self.robot_started_moving and linear_speed < self.speed_threshold:
+                self.current_goal_index += 1
+                self.send_navigation_goal()
+                self.robot_started_moving = False
 
     def send_navigation_goal(self):
         if not self.action_client.wait_for_server(timeout_sec=10.0):
@@ -97,7 +118,6 @@ class WaypointsNavigation(Node):
             marker_array.markers.append(text_marker)
 
         self.marker_pub.publish(marker_array)
-
 
 def main(args=None):
     rclpy.init(args=args)
