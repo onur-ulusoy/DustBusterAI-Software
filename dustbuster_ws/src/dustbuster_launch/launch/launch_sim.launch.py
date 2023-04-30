@@ -47,7 +47,7 @@ def generate_launch_description():
         launch_arguments={
             'world': LaunchConfiguration('world'),
             'verbose': 'false',
-            'gui': 'true',
+            'gui': 'false',
             'headless': 'false',
             'debug': 'false'
         }.items()
