@@ -24,6 +24,7 @@ setup(
             'explorer = dustbuster_navigation.explorer:main',
             'TSPGeneticSolver = dustbuster_navigation.TSPGeneticSolver:main',
             'WaypointsNavigation = dustbuster_navigation.WaypointsNavigation:main',
+            'rotate360 = dustbuster_navigation.rotate360:main',
         ],
     },
 )

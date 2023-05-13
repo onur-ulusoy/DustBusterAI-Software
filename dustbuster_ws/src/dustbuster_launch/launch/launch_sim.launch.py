@@ -20,7 +20,7 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.substitutions import LaunchConfiguration
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, TimerAction
 
 def generate_launch_description():
 
@@ -97,6 +97,18 @@ def generate_launch_description():
         }.items()
     )
 
+    # Rotate 360 node with a delay of 2 seconds
+    rotate_360_node = TimerAction(
+        period=5.0,  # delay in seconds
+        actions=[
+            Node(
+                package='dustbuster_navigation',
+                executable='rotate360',
+                output='screen'
+            )
+        ]
+    )
+
     # Return the launch description
     return LaunchDescription([
         world_arg,
@@ -105,6 +117,7 @@ def generate_launch_description():
         joint_state_publisher,
         spawn_entity,
         rviz,
-        nav2_bringup_launch
+        nav2_bringup_launch,
+        rotate_360_node
     ])
 
