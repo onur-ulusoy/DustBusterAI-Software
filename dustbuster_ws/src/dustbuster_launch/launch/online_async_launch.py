@@ -1,5 +1,5 @@
 """
-Launch file for starting the SLAM toolbox node.
+@brief: Launch file for starting the SLAM toolbox node.
 
 This file launches the async_slam_toolbox_node from the slam_toolbox package using
 the specified parameters file. The node subscribes to the sensor data and publishes
@@ -9,12 +9,16 @@ The launch file also declares the 'use_sim_time' argument to determine whether t
 simulation/Gazebo clock or not, and the 'slam_params_file' argument to specify the full
 path to the ROS2 parameters file to use for the SLAM toolbox node.
 
-Note:
+@note:
 Part of the file was retrieved from the Articulated Robotics repository: https://github.com/joshnewans
 and modified for use in this project.
 
 See Also:
 slam_toolbox package: https://github.com/SteveMacenski/slam_toolbox
+
+@author: Onur Ulusoy
+@date: 22.03.2023
+@license: MIT
 """
 
 import os
@@ -54,10 +58,15 @@ def generate_launch_description():
                                     default_params_file],
                                condition=UnlessCondition(has_node_params))
 
+    # Get the path to the package and the map file
+    package_path = get_package_share_directory('dustbuster_launch')
+    map_file_path = os.path.join(package_path, 'config', 'map_slam', 'map')
+
     start_async_slam_toolbox_node = Node(
         parameters=[
           actual_params_file,
-          {'use_sim_time': use_sim_time}
+          {'use_sim_time': use_sim_time},
+          {'map_file_name': map_file_path},
         ],
         package='slam_toolbox',
         executable='async_slam_toolbox_node',

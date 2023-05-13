@@ -1,14 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 """
-launch_sim.launch.py
+@brief: Launch file for Dustbuster robot simulation and visualization.
 
-Standalone launch file to run Gazebo, RViz, robot state publisher, joint state publisher, and spawn the robot in the room.
+This script runs Gazebo, RViz, Cartographer, Nav2, robot state publisher, joint state publisher, and spawns the robot in the room.
 
-Usage: ros2 launch launch_sim.launch.py
+Usage: ros2 launch dustbuster_launch launch_sim.launch.py
 
-Author: Onur Ulusoy
-Date: 22.03.2023
-
-This code is licensed under the MIT license.
+@author: Onur Ulusoy
+@date: 22.03.2023
+@license: MIT
 """
 
 import os
@@ -19,19 +21,18 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
-from launch.actions import SetEnvironmentVariable
-
 
 def generate_launch_description():
 
-    # Get the current working directory
-    cwd = os.getcwd()
-
-    # Get the share directory for gazebo_ros
+    # Get the share directory for dustbuster_launch, gazebo_ros
+    pkg_dustbuster_launch = get_package_share_directory('dustbuster_launch')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
+    # Get the config directory
+    config_dir = os.path.join(pkg_dustbuster_launch, 'config')
+
     # Declare world argument
-    world_file = os.path.join(cwd, 'room.world')
+    world_file = os.path.join(config_dir, 'gazebo_worlds', 'room.world')
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_file,
@@ -46,14 +47,14 @@ def generate_launch_description():
         launch_arguments={
             'world': LaunchConfiguration('world'),
             'verbose': 'false',
-            'gui': 'true',
+            'gui': 'false',
             'headless': 'false',
             'debug': 'false'
         }.items()
     )
 
     # Robot URDF file path
-    robot_urdf_file = cwd + '/description/dustbuster.urdf'
+    robot_urdf_file = os.path.join(pkg_dustbuster_launch, 'description', 'dustbuster.urdf')
 
     # Robot state publisher
     robot_state_publisher = Node(
@@ -76,7 +77,7 @@ def generate_launch_description():
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-topic', 'robot_description', '-entity', 'robot_draft'],
+        arguments=['-topic', 'robot_description', '-entity', 'dustbuster', '-x', '0', '-y', '0', '-z', '0.1225', '-R', '0', '-P', '0', '-Y', '0'],
         output='screen',
     )
 
@@ -84,20 +85,15 @@ def generate_launch_description():
     rviz = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', 'room.rviz'],
+        arguments=['-d', os.path.join(config_dir, 'rviz', 'dustbuster.rviz')],
         output='screen'
     )
 
-    # Get the config directory
-    config_dir = cwd + '/config'
-
-    # Slam launch
-    online_async_launch_file = os.path.join(cwd, 'online_async_launch.py')
-    online_async_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(online_async_launch_file),
+    # Nav2 Bringup launch
+    nav2_bringup_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(pkg_dustbuster_launch, 'launch', 'nav2_bringup.launch.py')),
         launch_arguments={
-            'use_sim_time': 'true',
-            'params_file': os.path.join(config_dir, 'mapper_params_online_async.yaml'),
+            'map_subscribe_transient_local': 'true'
         }.items()
     )
 
@@ -109,5 +105,6 @@ def generate_launch_description():
         joint_state_publisher,
         spawn_entity,
         rviz,
-        online_async_launch
+        nav2_bringup_launch
     ])
+

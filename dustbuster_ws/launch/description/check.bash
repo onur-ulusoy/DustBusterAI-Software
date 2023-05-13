@@ -1,1 +1,0 @@
-check_urdf robot_draft.urdf

@@ -1,0 +1,12 @@
+image: map.pgm
+origin:
+  orientation:
+    w: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  position:
+    x: -1.8505449295043945
+    y: -1.9157695770263672
+    z: 0.0
+resolution: 0.05000000074505806
