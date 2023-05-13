@@ -209,8 +209,17 @@ module_dir = os.path.abspath("/home/onur/Desktop/DustBusterAI-Software/dustbuste
 sys.path.insert(0, module_dir)
 
 from map_discretizer import *
+import save_map
+import time
 
 def main(args=None):
+    # Save the current map
+    map_dir = '/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation'
+    map_name = 'map2'
+    map_params = ['--map_path', map_dir, map_name]
+    save_map.main(map_params)
+    time.sleep(2)
+
     rclpy.init(args=args)
     tsp_solver_node = TSPSolverNode()
 
