@@ -7,7 +7,7 @@ def load_pgm_image(file_path):
     return cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
 
 def discretize_walkable_area(image, sample_rate):
-    walkable_area = np.where((image > 5) & (image < 255), 1, 0)
+    walkable_area = np.where(image == 255, 1, 0)
     sampled_area = walkable_area[::sample_rate, ::sample_rate]
     return np.where(sampled_area == 1)
 

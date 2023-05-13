@@ -32,8 +32,13 @@ class MapSaver(Node):
         # Reshape data and flip y-axis to match OpenCV image format
         data = data.reshape((height, width))[::-1, :]
 
-        # Convert data to image and save as .pgm file
-        image = cv2.convertScaleAbs(data, alpha=(255.0/100.0))
+        # Convert data to image
+        image = np.zeros_like(data, dtype=np.uint8)
+        image[data==-1] = 127  # Unknown areas
+        image[data==0] = 255   # Free areas
+        image[data==100] = 0   # Occupied areas
+
+        # Save image as .pgm file
         cv2.imwrite(os.path.join(self.map_path, f'{self.map_name}.pgm'), image)
 
         # Save metadata as .yaml file

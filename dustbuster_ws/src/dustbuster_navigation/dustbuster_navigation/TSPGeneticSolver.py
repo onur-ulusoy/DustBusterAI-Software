@@ -5,6 +5,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import yaml
 
 class TSPGeneticSolver:
 
@@ -183,9 +184,15 @@ class TSPSolverNode(Node):
 
     def publish_optimal_tour(self):
         pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
-        sample_rate = 30
-        origin_x = -2.9
-        origin_y = -4.05
+        sample_rate = 20
+
+        # Load the YAML file
+        with open("/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.yaml", 'r') as stream:
+            yaml_data = yaml.safe_load(stream)
+
+        # Extract the origin values
+        origin_x = yaml_data['origin']['position']['x']
+        origin_y = yaml_data['origin']['position']['y']
 
         image = load_pgm_image(pgm_file)
         coords = discretize_walkable_area(image, sample_rate)
@@ -193,6 +200,7 @@ class TSPSolverNode(Node):
         origin = (origin_x, origin_y)
 
         points = return_points(coords, image.shape, sample_rate, resolution, origin)
+        plot_walkable_area(coords, image.shape, sample_rate, resolution, origin)
 
         solver = TSPGeneticSolver(points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
         best_tour, best_length, fitness_values = solver.solve()
@@ -222,7 +230,7 @@ def main(args=None):
 
     rclpy.init(args=args)
     tsp_solver_node = TSPSolverNode()
-
+    
     # Call the publish_optimal_tour method directly after creating the node instance
     tsp_solver_node.publish_optimal_tour()
 
