@@ -181,7 +181,9 @@ class TSPSolverNode(Node):
     def __init__(self):
         super().__init__('tsp_solver_node')
         self.publisher_ = self.create_publisher(String, 'tsp_optimal_tour', 10)
-
+        
+        self.former_points = np.array([[0, 0], [0, 0]])
+    
     def publish_optimal_tour(self):
         pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
         sample_rate = 20
@@ -199,10 +201,13 @@ class TSPSolverNode(Node):
         resolution = 0.05
         origin = (origin_x, origin_y)
 
-        points = return_points(coords, image.shape, sample_rate, resolution, origin)
+        new_points = return_points(coords, image.shape, sample_rate, resolution, origin)
+        self.points = new_points
+        print(self.points)
+
         plot_walkable_area(coords, image.shape, sample_rate, resolution, origin)
 
-        solver = TSPGeneticSolver(points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
+        solver = TSPGeneticSolver(self.points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
         best_tour, best_length, fitness_values = solver.solve()
         x, y = solver.get_optimal_tour_points(best_tour)
 
@@ -210,6 +215,16 @@ class TSPSolverNode(Node):
         msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
         self.publisher_.publish(msg)
         solver.visualize_optimal_tour(best_tour)
+
+        if np.all(self.former_points == 0):
+            self.former_points = self.points
+        else:
+            self.former_points = np.append(self.former_points, self.points, axis=0)
+
+        print(self.former_points , "**")
+        print(type(self.former_points))
+        print(type(self.former_points[0]))
+
 
 
 import os, sys
@@ -221,22 +236,20 @@ import save_map
 import time
 
 def main(args=None):
-    # Save the current map
-    map_dir = '/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation'
-    map_name = 'map2'
-    map_params = ['--map_path', map_dir, map_name]
-    save_map.main(map_params)
-    time.sleep(2)
 
     rclpy.init(args=args)
     tsp_solver_node = TSPSolverNode()
-    
-    # Call the publish_optimal_tour method directly after creating the node instance
-    tsp_solver_node.publish_optimal_tour()
 
-    # No need to spin the node since we only want to publish once
-    tsp_solver_node.destroy_node()
-    rclpy.shutdown()
+    while True:
+        # Save the current map
+        map_dir = '/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation'
+        map_name = 'map2'
+        map_params = ['--map_path', map_dir, map_name]
+        save_map.main(map_params)
+        time.sleep(2)
+        
+        # Call the publish_optimal_tour method directly after creating the node instance
+        tsp_solver_node.publish_optimal_tour()
 
 if __name__ == "__main__":
     main()

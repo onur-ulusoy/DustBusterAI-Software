@@ -10,7 +10,7 @@ import argparse
 
 class MapSaver(Node):
 
-    def __init__(self, map_name, map_path):
+    def __init__(self, map_name, map_path, mask_map_path=None):
         super().__init__('map_saver')
         self.subscription = self.create_subscription(
             OccupancyGrid,
@@ -20,7 +20,15 @@ class MapSaver(Node):
         )
         self.map_name = map_name
         self.map_path = map_path
+        self.mask_map_path = mask_map_path
         self.map_saved = False
+
+    def apply_mask(self, image):
+        # Load the mask image from file
+        mask_image = cv2.imread(self.mask_map_path, cv2.IMREAD_GRAYSCALE)
+        # Apply the mask
+        image[mask_image==255] = 0
+        return image
 
     def listener_callback(self, msg):
         # Extract data from message
@@ -37,6 +45,10 @@ class MapSaver(Node):
         image[data==-1] = 127  # Unknown areas
         image[data==0] = 255   # Free areas
         image[data==100] = 0   # Occupied areas
+
+        # Apply mask if mask_map_path is specified
+        if self.mask_map_path is not None:
+            image = self.apply_mask(image)
 
         # Save image as .pgm file
         cv2.imwrite(os.path.join(self.map_path, f'{self.map_name}.pgm'), image)
@@ -66,17 +78,18 @@ class MapSaver(Node):
         self.map_saved = True
 
 def main(args=None):
-    rclpy.init(args=args)
+    #rclpy.init(args=args)
 
     parser = argparse.ArgumentParser(description='Save map to file')
     parser.add_argument('map_name', metavar='map_name', type=str, help='name of the map to save')
     parser.add_argument('--map_path', default='.', help='directory to save the map files')
+    parser.add_argument('--mask_map_path', default=None, help='path to map file to use as mask')
 
     # If args is not None, it means we're calling this function programmatically, so we parse these arguments
     # If args is None, it means we're calling this function from the command line, so we parse sys.argv
     parsed_args = parser.parse_args() if args is None else parser.parse_args(args)
 
-    map_saver = MapSaver(parsed_args.map_name, parsed_args.map_path)
+    map_saver = MapSaver(parsed_args.map_name, parsed_args.map_path, parsed_args.mask_map_path)
 
     executor = SingleThreadedExecutor()
     executor.add_node(map_saver)
@@ -85,9 +98,10 @@ def main(args=None):
         rclpy.spin_once(map_saver, executor=executor)
         if map_saver.map_saved:
             map_saver.get_logger().info("Map saved, map saver shutting down...")
-            map_saver.destroy_node()
-            rclpy.shutdown()
+            #map_saver.destroy_node()
+            #rclpy.shutdown()
             break
 
 if __name__ == '__main__':
     main()
+

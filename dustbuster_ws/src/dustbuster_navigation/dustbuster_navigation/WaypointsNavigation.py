@@ -95,14 +95,13 @@ class WaypointsNavigation(Node):
             transformed_pose = self.get_transformed_pose(current_pose)
             distance = self.distance_to_goal(transformed_pose, self.waypoints[self.current_goal_index])
             distance_threshold = 1.5
-            print(distance)
-            print(current_pose.position.x)
-            print(self.waypoints[self.current_goal_index])
+            #print(distance)
+            #print(current_pose.position.x)
+            #print(self.waypoints[self.current_goal_index])
             if distance < distance_threshold:
                 self.current_goal_index += 1
                 self.send_navigation_goal()
                 self.robot_started_moving = False
-
                 
     def publish_twist(self):
         twist = Twist()
@@ -167,11 +166,20 @@ class WaypointsNavigation(Node):
 
         self.marker_pub.publish(marker_array)
 
+import subprocess
+import time
+
+def launch_tsp():
+    script = '/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/TSPGeneticSolver.py'
+    subprocess.Popen(['python3', script])
+
 def main(args=None):
     rclpy.init(args=args)
     waypoints_navigation_node = WaypointsNavigation()
+    time.sleep(1)
+    launch_tsp()
     rclpy.spin(waypoints_navigation_node)
-
+    
     waypoints_navigation_node.destroy_node()
     rclpy.shutdown()
 
