@@ -49,6 +49,25 @@ class WaypointsNavigation(Node):
         self.current_goal_index = 0
         self.robot_started_moving = False
 
+        self.goal_timeout = 10.0  # Timeout for the robot to reach its goal in seconds
+        self.timer = self.create_timer(self.goal_timeout, self.check_goal_timeout)
+    
+    def check_goal_timeout(self):
+        if self.current_goal_index < len(self.waypoints) - 1:
+            current_pose = self.get_current_pose()
+            transformed_pose = self.get_transformed_pose(current_pose)
+            distance = self.distance_to_goal(transformed_pose, self.waypoints[self.current_goal_index])
+            distance_threshold = 1.5
+            if distance >= distance_threshold:
+                self.get_logger().warning('Goal not reached within timeout. Moving to the next waypoint.')
+                self.current_goal_index += 1
+                self.send_navigation_goal()
+                self.robot_started_moving = False
+
+    def reset_timer(self):
+        self.timer.cancel()  # Cancel the current timer
+        self.timer = self.create_timer(self.goal_timeout, self.check_goal_timeout)  # Create a new timer
+
     def odom_callback(self, msg):
         self.current_pose = msg.pose.pose
 
@@ -87,6 +106,10 @@ class WaypointsNavigation(Node):
             self.publish_labels()
             self.send_navigation_goal()
 
+        elif len(self.waypoints) == 1:
+            self.current_goal_index = 1
+            self.send_navigation_goal()
+            
         else:
             self.proc.terminate()
 
@@ -101,7 +124,7 @@ class WaypointsNavigation(Node):
             current_pose = self.get_current_pose()
             transformed_pose = self.get_transformed_pose(current_pose)
             distance = self.distance_to_goal(transformed_pose, self.waypoints[self.current_goal_index])
-            distance_threshold = 1.6
+            distance_threshold = 1
             #print(distance)
             #print(current_pose.position.x)
             #print(self.waypoints[self.current_goal_index])
@@ -109,6 +132,7 @@ class WaypointsNavigation(Node):
                 self.current_goal_index += 1
                 self.send_navigation_goal()
                 self.robot_started_moving = False
+                self.reset_timer()
 
     def publish_twist(self):
         twist = Twist()

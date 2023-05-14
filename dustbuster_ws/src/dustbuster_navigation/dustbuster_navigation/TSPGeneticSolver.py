@@ -202,7 +202,7 @@ class TSPSolverNode(Node):
         origin = (origin_x, origin_y)
 
         new_points = return_points(coords, image.shape, self.sample_rate, resolution, origin)
-        self.filter_points(new_points, 1.5)  # Filter the points
+        self.filter_points(new_points, 1.6)  # Filter the points
 
         print(self.points)
 
@@ -249,7 +249,8 @@ import time
 def main(args=None):
 
     rclpy.init(args=args)
-    tsp_solver_node = TSPSolverNode(22)
+    tsp_solver_node = TSPSolverNode(25)
+    non_area_consecutive = 0
 
     while True:
         # Save the current map
@@ -259,9 +260,18 @@ def main(args=None):
         save_map.main(map_params)
         time.sleep(2)
         
-        # Call the publish_optimal_tour method directly after creating the node instance
-        tsp_solver_node.publish_optimal_tour()
-        tsp_solver_node.sample_rate = 10
+        try:
+            # Call the publish_optimal_tour method directly after creating the node instance
+            tsp_solver_node.publish_optimal_tour()
+            non_area_consecutive = 0
+
+        except:
+            non_area_consecutive += 1
+            tsp_solver_node.sample_rate -= 3
+
+        
+
+
 
 
 if __name__ == "__main__":
