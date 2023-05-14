@@ -178,15 +178,15 @@ class TSPGeneticSolver:
         return x,y
 
 class TSPSolverNode(Node):
-    def __init__(self):
+    def __init__(self, sample_rate):
         super().__init__('tsp_solver_node')
         self.publisher_ = self.create_publisher(String, 'tsp_optimal_tour', 10)
         
         self.former_points = np.array([[0, 0], [0, 0]])
+        self.sample_rate = sample_rate
     
     def publish_optimal_tour(self):
         pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
-        sample_rate = 25
 
         # Load the YAML file
         with open("/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.yaml", 'r') as stream:
@@ -197,25 +197,26 @@ class TSPSolverNode(Node):
         origin_y = yaml_data['origin']['position']['y']
 
         image = load_pgm_image(pgm_file)
-        coords = discretize_walkable_area(image, sample_rate)
+        coords = discretize_walkable_area(image, self.sample_rate)
         resolution = 0.05
         origin = (origin_x, origin_y)
 
-        new_points = return_points(coords, image.shape, sample_rate, resolution, origin)
-        self.filter_points(new_points, 2)  # Filter the points
+        new_points = return_points(coords, image.shape, self.sample_rate, resolution, origin)
+        self.filter_points(new_points, 1.5)  # Filter the points
 
         print(self.points)
 
-        plot_walkable_area(coords, image.shape, sample_rate, resolution, origin)
+        plot_walkable_area(coords, image.shape, self.sample_rate, resolution, origin)
 
-        solver = TSPGeneticSolver(self.points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
-        best_tour, best_length, fitness_values = solver.solve()
-        x, y = solver.get_optimal_tour_points(best_tour)
+        self.solver = TSPGeneticSolver(self.points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
+        self.solver.sample_rate = self.sample_rate
+        best_tour, best_length, fitness_values = self.solver.solve()
+        x, y = self.solver.get_optimal_tour_points(best_tour)
 
         msg = String()
         msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
         self.publisher_.publish(msg)
-        solver.visualize_optimal_tour(best_tour)
+        self.solver.visualize_optimal_tour(best_tour)
 
         if np.all(self.former_points == 0):
             self.former_points = self.points
@@ -248,7 +249,7 @@ import time
 def main(args=None):
 
     rclpy.init(args=args)
-    tsp_solver_node = TSPSolverNode()
+    tsp_solver_node = TSPSolverNode(22)
 
     while True:
         # Save the current map
@@ -260,6 +261,8 @@ def main(args=None):
         
         # Call the publish_optimal_tour method directly after creating the node instance
         tsp_solver_node.publish_optimal_tour()
+        tsp_solver_node.sample_rate = 10
+
 
 if __name__ == "__main__":
     main()

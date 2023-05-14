@@ -101,7 +101,7 @@ class WaypointsNavigation(Node):
             current_pose = self.get_current_pose()
             transformed_pose = self.get_transformed_pose(current_pose)
             distance = self.distance_to_goal(transformed_pose, self.waypoints[self.current_goal_index])
-            distance_threshold = 2
+            distance_threshold = 1.6
             #print(distance)
             #print(current_pose.position.x)
             #print(self.waypoints[self.current_goal_index])

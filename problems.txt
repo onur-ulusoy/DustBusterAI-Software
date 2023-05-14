@@ -1,0 +1,4 @@
+tsp move back to 1 at the end *
+tsp does not mark as 1 the neareast point to robot ***
+sample rate should be donated with respect to size of new points (dynamic arrangement) ***
+
