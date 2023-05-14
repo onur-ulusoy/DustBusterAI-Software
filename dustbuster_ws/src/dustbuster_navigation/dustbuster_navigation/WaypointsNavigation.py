@@ -65,6 +65,8 @@ class WaypointsNavigation(Node):
             return self.current_pose
     
     def waypoints_callback(self, msg):
+        self.reset_waypoints()
+        self.waypoints = []
         data = msg.data.strip().split(';')
         for point in data:
             coords = point.split(',')
@@ -78,11 +80,15 @@ class WaypointsNavigation(Node):
             
             # Debug prints
             self.get_logger().info(f"Received waypoint: x={x}, y={y}")
-            
-        self.get_logger().info(f"Number of waypoints: {len(self.waypoints)}")
-        self.publish_markers()
-        self.publish_labels()
-        self.send_navigation_goal()
+        
+        if len(self.waypoints) > 1:
+            self.get_logger().info(f"Number of waypoints: {len(self.waypoints)}")
+            self.publish_markers()
+            self.publish_labels()
+            self.send_navigation_goal()
+
+        else:
+            self.proc.terminate()
 
     def distance_to_goal(self, current_pose, goal_pose):
         dx = goal_pose.pose.position.x - current_pose.position.x
@@ -90,11 +96,12 @@ class WaypointsNavigation(Node):
         return math.sqrt(dx * dx + dy * dy)
 
     def cmd_vel_callback(self, msg):
+
         if self.current_goal_index < len(self.waypoints) - 1:
             current_pose = self.get_current_pose()
             transformed_pose = self.get_transformed_pose(current_pose)
             distance = self.distance_to_goal(transformed_pose, self.waypoints[self.current_goal_index])
-            distance_threshold = 1.5
+            distance_threshold = 2
             #print(distance)
             #print(current_pose.position.x)
             #print(self.waypoints[self.current_goal_index])
@@ -102,7 +109,7 @@ class WaypointsNavigation(Node):
                 self.current_goal_index += 1
                 self.send_navigation_goal()
                 self.robot_started_moving = False
-                
+
     def publish_twist(self):
         twist = Twist()
         twist.linear.x = self.speed_threshold
@@ -166,18 +173,48 @@ class WaypointsNavigation(Node):
 
         self.marker_pub.publish(marker_array)
 
+    def reset_waypoints(self):
+        print("*\*******\n\n")
+        self.clear_markers()
+        self.clear_labels()
+        self.current_goal_index = 0
+    
+    def clear_markers(self):
+        marker_array = MarkerArray()
+        for idx in range(len(self.waypoints)):
+            marker = Marker()
+            marker.header.frame_id = 'map'
+            marker.type = Marker.SPHERE
+            marker.action = Marker.DELETE
+            marker.id = idx
+            marker_array.markers.append(marker)
+        self.marker_array_pub.publish(marker_array)
+    
+    def clear_labels(self):
+        marker_array = MarkerArray()
+        for idx in range(len(self.waypoints)):
+            text_marker = Marker()
+            text_marker.header.frame_id = 'map'
+            text_marker.ns = 'waypoint_labels'
+            text_marker.id = idx
+            text_marker.type = Marker.TEXT_VIEW_FACING
+            text_marker.action = Marker.DELETE
+            marker_array.markers.append(text_marker)
+        self.marker_pub.publish(marker_array)
+
 import subprocess
 import time
 
 def launch_tsp():
     script = '/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/TSPGeneticSolver.py'
-    subprocess.Popen(['python3', script])
+    proc = subprocess.Popen(['python3', script])
+    return proc
 
 def main(args=None):
     rclpy.init(args=args)
     waypoints_navigation_node = WaypointsNavigation()
     time.sleep(1)
-    launch_tsp()
+    waypoints_navigation_node.proc = launch_tsp()
     rclpy.spin(waypoints_navigation_node)
     
     waypoints_navigation_node.destroy_node()

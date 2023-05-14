@@ -186,7 +186,7 @@ class TSPSolverNode(Node):
     
     def publish_optimal_tour(self):
         pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
-        sample_rate = 20
+        sample_rate = 25
 
         # Load the YAML file
         with open("/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.yaml", 'r') as stream:
@@ -202,7 +202,8 @@ class TSPSolverNode(Node):
         origin = (origin_x, origin_y)
 
         new_points = return_points(coords, image.shape, sample_rate, resolution, origin)
-        self.points = new_points
+        self.filter_points(new_points, 2)  # Filter the points
+
         print(self.points)
 
         plot_walkable_area(coords, image.shape, sample_rate, resolution, origin)
@@ -222,9 +223,18 @@ class TSPSolverNode(Node):
             self.former_points = np.append(self.former_points, self.points, axis=0)
 
         print(self.former_points , "**")
-        print(type(self.former_points))
+        print(type(self.former_points)) 
         print(type(self.former_points[0]))
-
+    
+    def filter_points(self, new_points, distance):
+        if self.former_points is not None:
+            keep_indices = []
+            for i in range(new_points.shape[0]):
+                if np.min(np.sqrt(np.sum((self.former_points - new_points[i])**2, axis=1))) > distance:
+                    keep_indices.append(i)
+            self.points = new_points[keep_indices]
+        else:
+            self.points = new_points
 
 
 import os, sys
