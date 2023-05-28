@@ -40,11 +40,21 @@ class MapSaver(Node):
         # Reshape data and flip y-axis to match OpenCV image format
         data = data.reshape((height, width))[::-1, :]
 
-        # Convert data to image
-        image = np.zeros_like(data, dtype=np.uint8)
-        image[data==-1] = 127  # Unknown areas
+        # Initialize image as mid grey
+        image = np.full_like(data, fill_value=5, dtype=np.uint8)
+
+        # Map free and occupied cells to white and black, respectively
         image[data==0] = 255   # Free areas
         image[data==100] = 0   # Occupied areas
+
+        # For other values, map them to a gray scale (0-255)
+        # Here, we exclude -1, 0, and 100 from the mapping
+        data_min = -32
+        data_max = 33
+        for val in range(data_min, data_max+1):
+            if val not in [-1, 0, 100]:
+                gray_scale_val = int(((val - data_min) / (data_max - data_min)) * 255)
+                image[data==val] = gray_scale_val
 
         # Apply mask if mask_map_path is specified
         if self.mask_map_path is not None:

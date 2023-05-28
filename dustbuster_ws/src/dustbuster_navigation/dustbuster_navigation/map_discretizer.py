@@ -6,10 +6,17 @@ import matplotlib.pyplot as plt
 def load_pgm_image(file_path):
     return cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
 
-def discretize_walkable_area(image, sample_rate):
-    walkable_area = np.where(image == 255, 1, 0)
+def discretize_walkable_area(image, sample_rate, unknown = False):
+    print(unknown)
+    if not unknown:
+        walkable_area = np.where(image == 255, 1, 0)
+        print("***")
+    else:
+        walkable_area = np.where((image > 50) & (image < 140), 1, 0)
+        print("--")
     sampled_area = walkable_area[::sample_rate, ::sample_rate]
     return np.where(sampled_area == 1)
+
 
 def plot_walkable_area(coords, image_shape, sample_rate, resolution, origin):
     y, x = coords

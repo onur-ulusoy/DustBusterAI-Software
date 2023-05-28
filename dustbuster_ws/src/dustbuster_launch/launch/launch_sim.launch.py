@@ -99,7 +99,7 @@ def generate_launch_description():
 
     # Rotate 360 node with a delay of 2 seconds
     rotate_360_node = TimerAction(
-        period=5.0,  # delay in seconds
+        period=7.5,  # delay in seconds
         actions=[
             Node(
                 package='dustbuster_navigation',

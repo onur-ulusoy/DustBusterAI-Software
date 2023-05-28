@@ -135,7 +135,7 @@ controller_server:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.4
+      yaw_goal_tolerance: 0.99
     # DWB parameters
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
@@ -192,12 +192,12 @@ local_costmap:
       height: 3
       resolution: 0.05
       #footprint: "[ [-0.2, 0.315], [0.2, 0.315], [0.4, 0.315], [0.4898, 0.262], [0.5446, 0.162], [0.56, 0], [0.5446, -0.162], [0.4898, -0.262], [0.4, -0.315], [0.2, -0.315], [-0.2, -0.315] ]"
-      robot_radius: 0.4
+      robot_radius: 0.45
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.65
+        inflation_radius: 0.75
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -232,7 +232,7 @@ global_costmap:
       robot_base_frame: base_link
       use_sim_time: True
       #footprint: "[ [-0.2, 0.315], [0.2, 0.315], [0.4, 0.315], [0.4898, 0.262], [0.5446, 0.162], [0.56, 0], [0.5446, -0.162], [0.4898, -0.262], [0.4, -0.315], [0.2, -0.315], [-0.2, -0.315] ]"
-      robot_radius: 0.4
+      robot_radius: 0.45
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
@@ -256,7 +256,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.65
+        inflation_radius: 0.75
       always_send_full_costmap: True
 
 map_server:

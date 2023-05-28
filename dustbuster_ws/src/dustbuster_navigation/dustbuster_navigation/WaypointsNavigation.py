@@ -49,7 +49,7 @@ class WaypointsNavigation(Node):
         self.current_goal_index = 0
         self.robot_started_moving = False
 
-        self.goal_timeout = 10.0  # Timeout for the robot to reach its goal in seconds
+        self.goal_timeout = 18.0  # Timeout for the robot to reach its goal in seconds
         self.timer = self.create_timer(self.goal_timeout, self.check_goal_timeout)
     
     def check_goal_timeout(self):
@@ -85,6 +85,8 @@ class WaypointsNavigation(Node):
     
     def waypoints_callback(self, msg):
         self.reset_waypoints()
+        self.reset_timer()
+
         self.waypoints = []
         data = msg.data.strip().split(';')
         for point in data:
@@ -120,11 +122,11 @@ class WaypointsNavigation(Node):
 
     def cmd_vel_callback(self, msg):
 
-        if self.current_goal_index < len(self.waypoints) - 1:
+        if self.current_goal_index < len(self.waypoints) - 2:
             current_pose = self.get_current_pose()
             transformed_pose = self.get_transformed_pose(current_pose)
             distance = self.distance_to_goal(transformed_pose, self.waypoints[self.current_goal_index])
-            distance_threshold = 1
+            distance_threshold = 1.5
             #print(distance)
             #print(current_pose.position.x)
             #print(self.waypoints[self.current_goal_index])

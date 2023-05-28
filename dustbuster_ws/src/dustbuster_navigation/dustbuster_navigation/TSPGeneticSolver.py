@@ -178,14 +178,15 @@ class TSPGeneticSolver:
         return x,y
 
 class TSPSolverNode(Node):
-    def __init__(self, sample_rate):
+    def __init__(self, sample_rate, filter_threshold):
         super().__init__('tsp_solver_node')
         self.publisher_ = self.create_publisher(String, 'tsp_optimal_tour', 10)
         
         self.former_points = np.array([[0, 0], [0, 0]])
         self.sample_rate = sample_rate
+        self.filter_threshold = filter_threshold
     
-    def publish_optimal_tour(self):
+    def publish_optimal_tour(self, mapUnknown = False):
         pgm_file = "/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation/map2.pgm"
 
         # Load the YAML file
@@ -197,22 +198,30 @@ class TSPSolverNode(Node):
         origin_y = yaml_data['origin']['position']['y']
 
         image = load_pgm_image(pgm_file)
-        coords = discretize_walkable_area(image, self.sample_rate)
+        coords = discretize_walkable_area(image, self.sample_rate, unknown=mapUnknown)
         resolution = 0.05
         origin = (origin_x, origin_y)
 
         new_points = return_points(coords, image.shape, self.sample_rate, resolution, origin)
-        self.filter_points(new_points, 1.6)  # Filter the points
+        if not mapUnknown:
+            self.filter_points(new_points, self.filter_threshold)  # Filter the points
+        else:
+            self.points = new_points
 
         print(self.points)
-
+        if self.points.size == 1:
+            x = self.points[0][0]
+            y = self.points[0][1]
+            msg = String()
+            msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
+            self.publisher_.publish(msg)
+                
         plot_walkable_area(coords, image.shape, self.sample_rate, resolution, origin)
 
         self.solver = TSPGeneticSolver(self.points, pop_size=100, elite_size=20, mutation_rate=0.01, generations=800)
         self.solver.sample_rate = self.sample_rate
         best_tour, best_length, fitness_values = self.solver.solve()
         x, y = self.solver.get_optimal_tour_points(best_tour)
-
         msg = String()
         msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
         self.publisher_.publish(msg)
@@ -249,9 +258,10 @@ import time
 def main(args=None):
 
     rclpy.init(args=args)
-    tsp_solver_node = TSPSolverNode(25)
+    tsp_solver_node = TSPSolverNode(25, 2)
     non_area_consecutive = 0
 
+        
     while True:
         # Save the current map
         map_dir = '/home/onur/Desktop/DustBusterAI-Software/dustbuster_ws/src/dustbuster_navigation/dustbuster_navigation'
@@ -261,13 +271,25 @@ def main(args=None):
         time.sleep(2)
         
         try:
+            non_area_consecutive = 0
+            tsp_solver_node.sample_rate = 25
+            tsp_solver_node.filter_threshold = 2
             # Call the publish_optimal_tour method directly after creating the node instance
             tsp_solver_node.publish_optimal_tour()
-            non_area_consecutive = 0
 
         except:
+            print("Expection")
             non_area_consecutive += 1
-            tsp_solver_node.sample_rate -= 3
+            tsp_solver_node.sample_rate = 2
+            #tsp_solver_node.filter_threshold = 0.1
+            tsp_solver_node.publish_optimal_tour(True)
+
+
+            # msg = String()
+            # #msg.data = ';'.join([f"{xi}, {yi}" for xi, yi in zip(x, y)])
+            # msg.data = '-3, -3; -3.1, -3'
+            # tsp_solver_node.publisher_.publish(msg)
+            # time.sleep(15)
 
         
 
